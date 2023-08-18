@@ -6,6 +6,7 @@ import Layout from './Componentes/Layout';
 import Dashboard from './Pages/Dashboard';
 import RequireAuth from './Componentes/RequireAuth';
 import Unauthorized from './Pages/Unauthorized';
+import ProtectedRoute from './Componentes/ProtectedRoute';
 import Editor from './Pages/Editor';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -26,32 +27,42 @@ function App() {
     <>
       <Routes >
 
-        {/* 
-      <Route path="Login" element={<Login />} />
-      <Route path="/" element={<Dashboard/>} /> */}
+        {/* <Route element={validateSesion}> */}
+        {/* <Route path="Login" element={<Login />} /> */}
 
-        <Route element >
-          <Route>
+
+
+
+          {/* <Route path="/" element={
+             <ProtectedRoute>
+              <Dashboard></Dashboard>
+             </ProtectedRoute> */}
+          
+          {/* </Route> */}
+          
+
+        
+           <Route>
             <Route path="Unauthorized" element={<Unauthorized />} />
             <Route path="Login" element={<Login />} />
           </Route>
 
-          <Route >
-            <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdministrador]} />}>
+
+            <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Dashboard />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
+            <Route element={<ProtectedRoute  />}>
               <Route path="editor" element={<Editor />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdministrador]} />}>
+            <Route element={<ProtectedRoute />}>
               <Route path="ValidarInformacion" element={<ValidarInformacion />} />
             </Route>
             {/* catch all */}
             {/* <Route path="*" element={<Missing />} /> */}
-          </Route>
-        </Route>
+
+        
       </Routes>
     </>
 

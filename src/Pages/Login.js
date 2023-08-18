@@ -25,6 +25,13 @@ const Login = () => {
      userRef.current.focus();
   }, [])
 
+
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      navigate("/")
+    }
+ }, [])
+
   useEffect(() => {
     setErrMsg('');
   }, [documento, password])
