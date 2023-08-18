@@ -1,9 +1,10 @@
 
-import logo from '../Img/loader-ex.png'
+import logo from '../../Img/loader-ex.png'
 import { useRef, useState, useEffect } from 'react';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from '../Api/Axios';
+import axios from '../../Api/Axios';
+import { Loading } from '../../Componentes/Loading/Loading';
 
 const LOGIN_URL = '/Auth/Login';
 
@@ -25,12 +26,12 @@ const Login = () => {
      userRef.current.focus();
   }, [])
 
-
   useEffect(() => {
     if(localStorage.getItem("token")){
-      navigate("/")
+      navigate(from, { replace: true })
     }
  }, [])
+
 
   useEffect(() => {
     setErrMsg('');
@@ -48,15 +49,9 @@ const Login = () => {
           withCredentials: true
         }
       );
-      if(response?.data?.infoToken!==null){
 
-        let token=response.data.infoToken.token;
-        console.log("login")
-        console.log(token)
-        setAuth(token);
-        guardarUsuario(token)
-        setDocumento('');
-        setPassword('');
+      if(response?.data?.infoToken?.resultado){
+        guardarUsuario(response.data);
         navigate(from, { replace: true });
 
       }else{
@@ -77,8 +72,6 @@ const Login = () => {
       }
       errRef.current.focus();
     }
-
-    //  dispatch({ type: 'SET_TOKEN', payload: auth?.datos?.infoToken?.token });
   }
 
   // const togglePersist = () => {
@@ -93,6 +86,7 @@ const Login = () => {
 
 
   return (
+
 
 
 

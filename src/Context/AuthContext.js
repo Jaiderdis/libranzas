@@ -1,45 +1,46 @@
-import { createContext, useEffect, useState,useReducer } from "react";
-
+import { createContext, useEffect, useState, useReducer } from "react";
+import jwt_decode from "jwt-decode";
 const AuthContext = createContext({
 
 });
 
 
-// const initialState = {
-//     token: localStorage.getItem('token') || null,
-//   };
-
-
-//   const sessionReducer = (state, action) => {
-//     switch (action.type) {
-//       case 'SET_TOKEN':
-//         return { ...state, token: action.payload };
-//       default:
-//         return state;
-//     }
-//   };
-
-//   const getToken=()=>{
-//     return localStorage.getItem('token');
-// }
-
-
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
-    // const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false);
+    const [user, setUser] = useState({
+        nombre: '',
+        Rol: ''
+    });
+    // function guardarUsuario(token){
+    //     localStorage.setItem("token",JSON.stringify(token))
+    //     // localStorage.setItem("refreshToken",JSON.stringify(datos.infoToken.refreshToken))
+    // }
 
-   
-    // const [state, dispatch] = useReducer(sessionReducer, initialState);
-    // const [token,obtenerToken] = useReducer(getToken, null);
+    function guardarUsuario(datos) {
+        console.log(datos)
+        const token = datos.infoToken.token;
+        const refreshToken = datos.infoToken.refreshToken;
 
-    function guardarUsuario(token){
-        localStorage.setItem("token",JSON.stringify(token))
-        // localStorage.setItem("refreshToken",JSON.stringify(datos.infoToken.refreshToken))
+
+        if (token !== null) {
+    
+            const decoded = jwt_decode(token);
+            console.log(decoded)
+            setAuth(token)
+            localStorage.setItem("token", JSON.stringify(token))
+            localStorage.setItem("exp", JSON.stringify())
+            localStorage.setItem("refreshToken", JSON.stringify(refreshToken))
+        }
+
+
     }
 
+
+
+
     return (
-        <AuthContext.Provider value={{ auth, setAuth,guardarUsuario}}>
-        {/* // <AuthContext.Provider value={{ auth, setAuth}}> */}
+        <AuthContext.Provider value={{ auth, setAuth, guardarUsuario }}>
+            {/* // <AuthContext.Provider value={{ auth, setAuth}}> */}
             {children}
         </AuthContext.Provider>
     )

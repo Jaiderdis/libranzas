@@ -5,6 +5,7 @@ const useRefreshToken = () => {
     const {auth, setAuth } = useAuth();
 
     const refresh = async () => {
+        console.log("refresh")
         console.log(auth)
         const TokenExpirado=localStorage.getItem("token")
         const RefreshToken=localStorage.getItem("refreshToken")

@@ -1,9 +1,9 @@
 
 
-import React, { useState } from 'react'
-import profilePic from './Images/user-default.png'
-import useAuth from '../hooks/useAuth';
-import '../Componentes/Navbar.modules.css';
+import React, { useEffect, useState } from 'react'
+import profilePic from '../Images/user-default.png'
+import useAuth from '../../hooks/useAuth';
+import '../Navbar/Navbar.modules.css'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 
@@ -70,6 +70,10 @@ const Navbar = (nombre) => {
         localStorage.clear();
         navigate('/login');
     }
+
+    useEffect(() => {
+        
+    },[])
 
 
     return (

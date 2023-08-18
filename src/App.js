@@ -1,18 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-import Login from './Pages/Login';
-import Navbar from './Componentes/Navbar';
-import Layout from './Componentes/Layout';
-import Dashboard from './Pages/Dashboard';
-import RequireAuth from './Componentes/RequireAuth';
-import Unauthorized from './Pages/Unauthorized';
-import ProtectedRoute from './Componentes/ProtectedRoute';
-import Editor from './Pages/Editor';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import {Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import PersistLogin from './Componentes/PersistLogin';
-import ValidarInformacion from './Pages/ValidarInformacion';
 
+//----estilos----
+import './App.css';
+//----estilos----
+
+//----componetes----
+import RequireAuth from './Componentes/RequireAuth';
+import Layout from './Componentes/Layout';
+import PersistLogin from './Componentes/PersistLogin';
+import ProtectedRoute from './Componentes/ProtectedRoute';
+//----componetes----
+// ----Pages---
+import Login from './Pages/Login/Login';
+import Editor from './Pages/Editor';
+import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion';
+import Unauthorized from './Pages/Unauthorized/Unauthorized';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import useAuth from './hooks/useAuth';
+// ----Pages---
 
 
 
@@ -21,55 +27,39 @@ const ROLES = {
   'Editor': 'Editor',
   'Admin': 'Admin'
 }
+
+
+
+
+
 function App() {
+  const { auth,setAuth } = useAuth();
+
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      var token=localStorage.getItem("token");
+      setAuth(token)
+    }
+   
+  },[]);
 
   return (
-    <>
       <Routes >
 
-        {/* <Route element={validateSesion}> */}
-        {/* <Route path="Login" element={<Login />} /> */}
+        <Route >
+          <Route path="/Unauthorized" element={<Unauthorized />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
 
 
-
-
-          {/* <Route path="/" element={
-             <ProtectedRoute>
-              <Dashboard></Dashboard>
-             </ProtectedRoute> */}
-          
-          {/* </Route> */}
-          
-
-        
-           <Route>
-            <Route path="Unauthorized" element={<Unauthorized />} />
-            <Route path="Login" element={<Login />} />
+        <Route element={<Layout />}>
+           <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/ArchivosCargados" element={<Editor />} />
+            <Route path="/ValidarInformacion" element={<ValidarInformacion />} />
           </Route>
-
-
-             <Route element={<Layout></Layout>}>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Dashboard />} />
-            </Route>
-
-            <Route element={<ProtectedRoute  />}>
-              <Route path="editor" element={<Editor />} />
-            </Route>
-
-            <Route element={<ProtectedRoute />}>
-              <Route path="ValidarInformacion" element={<ValidarInformacion />} />
-            </Route>
-
-            </Route>
-            {/* catch all */}
-            {/* <Route path="*" element={<Missing />} /> */}
-
-        
+        </Route>
       </Routes>
-    </>
-
-
   );
 }
 
