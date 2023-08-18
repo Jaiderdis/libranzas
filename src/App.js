@@ -48,6 +48,7 @@ function App() {
           </Route>
 
 
+             <Route element={<Layout></Layout>}>
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Dashboard />} />
             </Route>
@@ -58,6 +59,8 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route path="ValidarInformacion" element={<ValidarInformacion />} />
+            </Route>
+
             </Route>
             {/* catch all */}
             {/* <Route path="*" element={<Missing />} /> */}
