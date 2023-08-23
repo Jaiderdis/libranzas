@@ -2,32 +2,40 @@ import axios from '../Api/Axios';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-    const {auth, setAuth } = useAuth();
+    const {auth, setAuth ,cookies,guardarUsuario} = useAuth();
 
     const refresh = async () => {
-        console.log("refresh")
-        console.log(auth)
+
         const TokenExpirado=localStorage.getItem("token")
         const RefreshToken=localStorage.getItem("refreshToken")
 
+        
+        const requestData = {
+            TokenExpirado: cookies.token,
+            RefreshToken: cookies.refreshToken
+          };
 
-        const response = await axios.post('/Auth/ObtenerRefreshToken', JSON.stringify({TokenExpirado , RefreshToken }), {
+
+
+        const response = await axios.post('/Auth/ObtenerRefreshToken', requestData, {
             withCredentials: true
         });
 
-        // if(response.data){
+        if(response.data.resultado){
 
-        // }
-        setAuth(prev => {
-            console.log(JSON.stringify(prev));
-            console.log(response.data.token);
-            return { ...prev, datos:{infoToken:{
-                token:response.data.token,
-                refreshToken:response.data.refreshToken
-                }}  
-            }
-        });
-        return response.data.accessToken;
+            guardarUsuario({ token: response.data.token, refreshToken:response.data.refreshToken})
+
+            // setAuth(prev => {
+
+            //     return { ...prev, datos:{infoToken:{
+            //         token:response.data.token,
+            //         refreshToken:response.data.refreshToken
+            //         }}  
+            //     }
+            // });
+        }
+       
+        return response.data.token;
     }
     return refresh;
 };

@@ -8,6 +8,7 @@ import './App.css';
 //----componetes----
 import RequireAuth from './Componentes/RequireAuth';
 import Layout from './Componentes/Layout';
+import LayoutLogin from './Componentes/LayoutLogin';
 import PersistLogin from './Componentes/PersistLogin';
 import ProtectedRoute from './Componentes/ProtectedRoute';
 //----componetes----
@@ -29,31 +30,22 @@ const ROLES = {
 }
 
 
-
-
-
 function App() {
-  const { auth,setAuth } = useAuth();
-
-  useEffect(() => {
-    if(localStorage.getItem("token")){
-      var token=localStorage.getItem("token");
-      setAuth(token)
-    }
-   
-  },[]);
 
   return (
       <Routes >
 
-        <Route >
-          <Route path="/Unauthorized" element={<Unauthorized />} />
+        <Route  element={<LayoutLogin/>}>
           <Route path="/login" element={<Login />} />
         </Route>
 
+        <Route>
+           <Route path="/Unauthorized" element={<Unauthorized />} />
+        </Route>
 
-        <Route element={<Layout />}>
-           <Route element={<ProtectedRoute />}>
+
+        <Route element={<ProtectedRoute/> }>
+           <Route element={<Layout />} >
             <Route path="/" element={<Dashboard />} />
             <Route path="/ArchivosCargados" element={<Editor />} />
             <Route path="/ValidarInformacion" element={<ValidarInformacion />} />

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import profilePic from '../Images/user-default.png'
+import loader from '../Images/loader-ex.png'
 import useAuth from '../../hooks/useAuth';
 import '../Navbar/Navbar.modules.css'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
@@ -42,8 +43,8 @@ const links = [
     }
 ]
 
-const Navbar = (nombre) => {
-    const { auth } = useAuth();
+const Navbar = () => {
+    const { auth,outLogin} = useAuth();
     const navigate = useNavigate();
     const [showdropuser, setshowdropuser] = useState(false)
 
@@ -61,19 +62,17 @@ const Navbar = (nombre) => {
     }
 
     const handlerCerrarSesion = () => {
-        localStorage.clear();
+        outLogin();
         navigate('/login');
     }
 
 
     const dark = () => {
-        localStorage.clear();
+        
+        outLogin();
         navigate('/login');
     }
 
-    useEffect(() => {
-        
-    },[])
 
 
     return (
@@ -90,8 +89,8 @@ const Navbar = (nombre) => {
                                 </svg>
                             </button>
                             <a href="https://flowbite.com" className="flex ml-2 md:mr-24">
-                                <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="FlowBite Logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                                <img src={loader} className="h-8 mr-3" alt="Exponencial Logo" />
+                                {/* <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Exponencial</span> */}
                             </a>
                         </div>
                         <div className="flex items-center">
@@ -99,7 +98,7 @@ const Navbar = (nombre) => {
                                 <div>
                                     <button type="button" className={"flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"} onClick={togglePerfil} aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
+                                        <img className="w-8 h-8 rounded-full" src={profilePic} alt="user photo" />
                                     </button>
                                 </div>
                                 <div className={`${(!showdropuser ? 'hidden' : 'show')} 50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
@@ -147,7 +146,7 @@ const Navbar = (nombre) => {
                     </div>
                     <ul className="space-y-2 font-medium">
                         {links.map(({ label, route }) =>
-                            <li>
+                            <li key={label}>
                                 <a href={route} className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"'>
                                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                         <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />

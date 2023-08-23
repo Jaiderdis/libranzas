@@ -11,7 +11,7 @@ const LOGIN_URL = '/Auth/Login';
 
 
 const Login = () => {
-  const { auth,setAuth,guardarUsuario} = useAuth();
+  const {guardarUsuario} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -22,20 +22,20 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState('');
   const [cargandoUsuario, setCargandoUsuario] = useState(true);
 
-  useEffect(() => {
-     userRef.current.focus();
-  }, [])
+  // useEffect(() => {
+  //    userRef.current.focus();
+  // }, [])
 
-  useEffect(() => {
-    if(localStorage.getItem("token")){
-      navigate(from, { replace: true })
-    }
- }, [])
+//   useEffect(() => {
+//     if(localStorage.getItem("token")){
+//       navigate(from, { replace: true })
+//     }
+//  }, [])
 
 
-  useEffect(() => {
-    setErrMsg('');
-  }, [documento, password])
+  // useEffect(() => {
+  //   setErrMsg('');
+  // }, [documento, password])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,8 +51,9 @@ const Login = () => {
       );
 
       if(response?.data?.infoToken?.resultado){
-        guardarUsuario(response.data);
-        navigate(from, { replace: true });
+        guardarUsuario(response.data.infoToken);
+        // navigate(from, { replace: true });
+        navigate('/')
 
       }else{
         throw true
@@ -73,16 +74,6 @@ const Login = () => {
       errRef.current.focus();
     }
   }
-
-  // const togglePersist = () => {
-  //   setPersist(prev => !prev);
-  // }
-
-  // useEffect(() => {
-  //     localStorage.setItem("persist", persist);
-  // }, [persist])
-
-
 
 
   return (
@@ -130,11 +121,6 @@ const Login = () => {
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                 Contraseña
               </label>
-                {/* <div className="text-sm">
-                  <a href="#" className="font-semibold text-cyan-600 hover:text-cyan-500">
-                    Forgot password?
-                  </a>
-                </div> */}
               </div>
               <div className="mt-2">
                 <input
@@ -158,16 +144,6 @@ const Login = () => {
               >
                 Iniciar Sesion
               </button>
-
-              {/* <div className="persistCheck">
-                    <input
-                        type="checkbox"
-                        id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
-                    />
-                    <label htmlFor="persist">Trust This Device</label>
-                </div> */}
             </div>
           </form>
         </div>
