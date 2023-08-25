@@ -9,7 +9,6 @@ import './App.css';
 import RequireAuth from './Componentes/RequireAuth';
 import Layout from './Componentes/Layout';
 import LayoutLogin from './Componentes/LayoutLogin';
-import PersistLogin from './Componentes/PersistLogin';
 import ProtectedRoute from './Componentes/ProtectedRoute';
 //----componetes----
 // ----Pages---

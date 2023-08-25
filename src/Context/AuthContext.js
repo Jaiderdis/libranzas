@@ -1,17 +1,18 @@
 import { createContext, useEffect, useState, useReducer } from "react";
 import jwt_decode from "jwt-decode";
 import { useCookies } from 'react-cookie'
+import axios from '../Api/Axios';
+
 const AuthContext = createContext({});
-
-
-
-
+const deleteRToken = '/Auth/EliminarRefreshToken';
 
 
 export const AuthProvider = ({ children }) => {
     const [cookies, setCookie,removeCookie] = useCookies(['token', 'refreshToken'])
     const [auth, setAuth] = useState(() => cookies.token ? cookies.token : null)
-    // const [isAuthenticate, setIsAuthenticate] = useState(() => localStorage.getItem('token') ? localStorage.getItem('token') : null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [user, setUser] = useState()
+    const [rol, setRol] = useState()
 
     function guardarUsuario(datos) {
 
@@ -20,42 +21,32 @@ export const AuthProvider = ({ children }) => {
             const refreshToken = datos.refreshToken;
             let expires = new Date()
             expires.setDate(expires.getDate() + 1); // Ejemplo: la cookie expirará en 7 días
-            
-          
             setAuth(token)
             setCookie('token', token,{path: '/',expires: expires })
             setCookie('refreshToken', refreshToken,{path: '/', expires: expires})
+            
     
         }
-       
-
-
-    //  console.log(cookies.token)
-    //     const co=new Cookies();
-
-
-    //     expirationDate.setDate(expirationDate.getDate() + 1); // Ejemplo: la cookie expirará en 7 días
-
-    //     co.set('token', token, { expires: expirationDate, httpOnly: true });
-
-
-    //    const c= co.get('token')
-    // console.log('hola')
-    // console.log(c)
-
-
-
-
-        // if (token) {
-        //     setAuth(JSON.stringify(token))
-        //     localStorage.setItem("token", JSON.stringify(token))
-        //     localStorage.setItem("refreshToken", JSON.stringify(refreshToken))
-        // }
 
     }
 
-    function outLogin(){
+    function decodeJwt(token){
+        var decoded = jwt_decode(token);
+        return decoded
+    }
 
+     async function outLogin(){
+        
+          axios.post(deleteRToken,
+            JSON.stringify({ tokenExpirado:cookies.token ,refreshToken:cookies.refreshToken}),
+            {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true
+            }
+          );
+
+        setIsLoading(false)
+        
         removeCookie("token");
         removeCookie("refreshToken");
         setAuth(null);
@@ -68,7 +59,14 @@ export const AuthProvider = ({ children }) => {
                 auth,
                 setAuth,
                 guardarUsuario,
-                cookies
+                cookies,
+                isLoading,
+                setIsLoading,
+                user,
+                setUser,
+                decodeJwt,
+                rol,
+                setRol
             }}>
 
             {children}

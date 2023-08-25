@@ -5,14 +5,16 @@ import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from '../../Api/Axios';
 import { Loading } from '../../Componentes/Loading/Loading';
-
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const LOGIN_URL = '/Auth/Login';
 
 
 
+
 const Login = () => {
-  const {guardarUsuario} = useAuth();
+  const {guardarUsuario,decodeJwt,setUser} = useAuth();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const userRef = useRef();
@@ -50,11 +52,12 @@ const Login = () => {
         }
       );
 
-      if(response?.data?.infoToken?.resultado){
-        guardarUsuario(response.data.infoToken);
-        // navigate(from, { replace: true });
+      if(response?.data?.success){
+       
+        guardarUsuario(response.data.result);
+        
+       
         navigate('/')
-
       }else{
         throw true
       }

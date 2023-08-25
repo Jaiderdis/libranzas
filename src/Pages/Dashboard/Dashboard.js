@@ -35,29 +35,25 @@ const Dashboard = () => {
 
 
   useEffect(() => {
-    let isMounted = true;
     const controller = new AbortController();
+    const signal = controller.signal;
 
     const getUsers = async () => {
-        try {
-            const response = await axiosPrivate.get('/Archivos/prueba', {
-                signal: controller.signal
-            });
-            console.log(response.data);
-            isMounted && setUsers(response.data);
-        } catch (err) {
-            console.error(err);
-            // navigate('/login', { state: { from: location }, replace: true });
-        }
-    }
+      try {
+        const response = await axiosPrivate.get('/Archivos/prueba', { signal });
+        setUsers(response.data);
+      } catch (err) {
+        // Handle error, e.g., redirect to login
+        console.log('Error fetching users:'+err);
+      }
+    };
 
     getUsers();
 
     return () => {
-        isMounted = false;
-        controller.abort();
-    }
-  }, [])
+      controller.abort();
+    };
+  }, []);
 
   //  const user = useSelector((state) => state.user);
 
