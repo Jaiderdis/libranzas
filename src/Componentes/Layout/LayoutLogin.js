@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { Loading } from "./Loading/Loading";
+import { Loading } from "../Loading/Loading";
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const LayoutLogin = () => {
     const [isLoading, setIsLoading] = useState(true);

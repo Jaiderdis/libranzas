@@ -1,8 +1,8 @@
-import axios from '../Api/Axios';
+import axiosPrivate from '../Api/Axios';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-    const {cookies,guardarUsuario} = useAuth();
+    const {cookies,saveUser} = useAuth();
 
     const refresh = async () => {
   
@@ -11,12 +11,12 @@ const useRefreshToken = () => {
             RefreshToken: cookies.refreshToken
           };
 
-        const response = await axios.post('/Auth/ObtenerRefreshToken', requestData, {
+        const response = await axiosPrivate.post('/Auth/ObtenerRefreshToken', requestData, {
             withCredentials: true
         });
 
         if(response?.data?.success){
-            guardarUsuario({ token: response.data.result.token, refreshToken:response.data.result.refreshToken})
+            saveUser({ token: response.data.result.token, refreshToken:response.data.result.refreshToken})
         }else if(response?.data?.message==='El token aun no ha expirado'){
             return cookies.token;
         }

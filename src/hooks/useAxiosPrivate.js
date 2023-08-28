@@ -29,6 +29,8 @@ const useAxiosPrivate = () => {
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
+                }else if(error?.response?.status === 400){
+                    console.log(error)
                 }
                 return Promise.reject(error);
             }

@@ -2,9 +2,10 @@ import { createContext, useEffect, useState, useReducer } from "react";
 import jwt_decode from "jwt-decode";
 import { useCookies } from 'react-cookie'
 import axios from '../Api/Axios';
+import { logout } from "../Services/LoginService";
 
 const AuthContext = createContext({});
-const deleteRToken = '/Auth/EliminarRefreshToken';
+
 
 
 export const AuthProvider = ({ children }) => {
@@ -14,8 +15,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState()
     const [rol, setRol] = useState()
 
-    function guardarUsuario(datos) {
-
+    function saveUser(datos) {
         if(datos){
             const token = datos.token;
             const refreshToken = datos.refreshToken;
@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
             setAuth(token)
             setCookie('token', token,{path: '/',expires: expires })
             setCookie('refreshToken', refreshToken,{path: '/', expires: expires})
-            
     
         }
 
@@ -37,16 +36,7 @@ export const AuthProvider = ({ children }) => {
 
      async function outLogin(){
         
-          axios.post(deleteRToken,
-            JSON.stringify({ tokenExpirado:cookies.token ,refreshToken:cookies.refreshToken}),
-            {
-              headers: { 'Content-Type': 'application/json' },
-              withCredentials: true
-            }
-          );
-
-        setIsLoading(false)
-        
+        logout({ tokenExpirado:cookies.token ,refreshToken:cookies.refreshToken})
         removeCookie("token");
         removeCookie("refreshToken");
         setAuth(null);
@@ -58,7 +48,7 @@ export const AuthProvider = ({ children }) => {
             {outLogin,
                 auth,
                 setAuth,
-                guardarUsuario,
+                saveUser,
                 cookies,
                 isLoading,
                 setIsLoading,
@@ -66,7 +56,8 @@ export const AuthProvider = ({ children }) => {
                 setUser,
                 decodeJwt,
                 rol,
-                setRol
+                setRol,
+
             }}>
 
             {children}

@@ -1,47 +1,30 @@
 import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Loading } from "./Loading/Loading";
 
-const RequireAuth = ({ allowedRoles}) => {
-    const { auth,setAuth } = useAuth();
+const RequireAuth = ({ allowedRoles }) => {
+    const { auth, setAuth, rol, isLoading } = useAuth();
+    const [isCargandoRol,setIsCargandoRol]=useState(true)
     const location = useLocation();
     const navigate = useNavigate();
-    // const token =getToken()
 
-    useEffect(() => {
-        const token=localStorage.getItem("token");
-        if(token){
-            console.log(token)
-            setAuth(token)
-          
+    useEffect(()=>{
+        if(!auth){
+            navigate('/login')
+        }else if(auth&&rol){
+            setIsCargandoRol(false)
         }
-        // if(token){
-        //   console.log("si hay")
-        // }
-        // else{
-        //   console.log("no hay")
-        // }
-     }, [])
+    },[rol])
 
 
-
-
-  return (
-
-
-        // token!==null
-        // ?( <Outlet />)
-        // :<Navigate to="/Login" state={{ from: location }} replace />
-        // <Outlet/>
-         auth?<Outlet/>
-        // state.token!==null
-        //    auth ? (location.pathname.toLowerCase()==='/login'&&auth? <Navigate to="/" state={{ from: location }} replace /> : <Outlet />)
-            // ?  <Outlet />
-            // : auth?.
-            //     ? <Navigate to="/Unauthorized" state={{ from: location }} replace />
-                : <Navigate to="/Login" state={{ from: location }} replace />
-
-        // <Navigate to="/login" state={{ from: location }} replace />
+    return (
+        isCargandoRol? <Loading /> :
+            allowedRoles.includes(rol)
+                ? <Outlet />
+                : auth
+                    ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+                    : <Navigate to="/login" state={{ from: location }} replace />
     );
 }
 

@@ -27,13 +27,13 @@ const ValidarInformacion = () => {
         <form className="w-full max-w-3xl">
           <div className="flex flex-wrap -mx-3 m-8">
             <div className="w-full md:w-1/2 px-3">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+              <label className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-first-name">
                 Valor Compra
               </label>
               <input className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="number" placeholder="$" />
             </div>
             <div className="w-full md:w-1/2 px-3">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+              <label className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-last-name">
                 Saldo Cartera
               </label>
               <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" id="grid-last-name" type="text" placeholder="$" />
@@ -41,19 +41,19 @@ const ValidarInformacion = () => {
           </div>
           <div className="flex flex-wrap -mx-3 m-8">
             <div className="w-full md:w-1/3 px-3 ">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+              <label className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-city">
                 Saldo Pensionados Cartera
               </label>
               <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" id="grid-city" type="text" placeholder="$" />
             </div>
-            <div className="w-full md:w-1/3 px-3 ">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+            <div className="w-full md:w-1/2 px-3 ">
+              <label className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-city">
                 Saldo No Pensionados Cartera
               </label>
               <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" id="grid-city" type="text" placeholder="$" />
             </div>
-            <div className="w-full md:w-1/3 px-3 ">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+            <div className="w-full md:w-1/6 px-3 ">
+              <label className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-zip">
                 Tasa Usura %
               </label>
               <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" id="grid-zip" type="text" placeholder="%" />

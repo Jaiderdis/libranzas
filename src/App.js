@@ -1,4 +1,4 @@
-import {Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 //----estilos----
@@ -7,13 +7,13 @@ import './App.css';
 
 //----componetes----
 import RequireAuth from './Componentes/RequireAuth';
-import Layout from './Componentes/Layout';
-import LayoutLogin from './Componentes/LayoutLogin';
+import Layout from './Componentes/Layout/Layout';
+import LayoutLogin from './Componentes/Layout/LayoutLogin';
 import ProtectedRoute from './Componentes/ProtectedRoute';
 //----componetes----
 // ----Pages---
 import Login from './Pages/Login/Login';
-import Editor from './Pages/Editor';
+import CargarArchivos from './Pages/CargarArchivos/CargarArchivos';
 import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion';
 import Unauthorized from './Pages/Unauthorized/Unauthorized';
 import Dashboard from './Pages/Dashboard/Dashboard';
@@ -23,34 +23,43 @@ import useAuth from './hooks/useAuth';
 
 
 const ROLES = {
-  'SuperAdministrador': 'Super Administrador',
-  'Editor': 'Editor',
-  'Admin': 'Admin'
+  'Super': '1',
+  'Admin': '2',
+  'provee': '3'
 }
 
 
 function App() {
 
   return (
-      <Routes >
+    <Routes >
 
-        <Route  element={<LayoutLogin/>}>
-          <Route path="/login" element={<Login />} />
-        </Route>
+      <Route element={<LayoutLogin />}>
+        <Route path="/login" element={<Login />} />
+      </Route>
 
-        <Route>
-           <Route path="/Unauthorized" element={<Unauthorized />} />
-        </Route>
+      <Route>
+        <Route path="/Unauthorized" element={<Unauthorized />} />
+      </Route>
 
 
-        <Route element={<ProtectedRoute/> }>
-           <Route element={<Layout />} >
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/ArchivosCargados" element={<Editor />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />} >
+
+          <Route path="/" element={<Dashboard />} />
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.Super,ROLES.Admin]}/>}>
             <Route path="/ValidarInformacion" element={<ValidarInformacion />} />
           </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.provee,ROLES.Super]}/>}>
+            <Route path="/CargarArchivos" element={<CargarArchivos />} />
+          </Route>
+
+
         </Route>
-      </Routes>
+      </Route>
+    </Routes>
   );
 }
 
