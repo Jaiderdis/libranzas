@@ -34,9 +34,17 @@ export const AuthProvider = ({ children }) => {
         return decoded
     }
 
-     async function outLogin(){
-        
-        logout({ tokenExpirado:cookies.token ,refreshToken:cookies.refreshToken})
+    async function outLogin(){
+     try{
+          const response= await logout({ tokenExpirado:cookies.token ,refreshToken:cookies.refreshToken})
+          if(response.data.success){
+            console.log("Se elimino correctamente")
+          }
+        }catch(err){
+            
+            console.log("ya fue eliminado")
+        }
+       
         removeCookie("token");
         removeCookie("refreshToken");
         setAuth(null);

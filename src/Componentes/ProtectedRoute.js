@@ -5,14 +5,13 @@ import useAuth from '../hooks/useAuth';
 import jwt_decode from 'jwt-decode';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-const Usuario_URL = '/Usuarios/ConsultarDatosUsuario';
 const ProtectedRoute = () => {
 
   const { auth, cookies, IsLoading,outLogin, setUser,setRol} = useAuth();
-  const axiosPrivate = useAxiosPrivate();
 
 
   useEffect(() => {
+    
     if (cookies.token) {
       const decoded = jwt_decode(cookies.token)
       setUser(decoded.name)
@@ -23,8 +22,6 @@ const ProtectedRoute = () => {
       if (expired < actual) {
         outLogin()
       }
-    }else{
-      outLogin()
     }
 
   }, [])

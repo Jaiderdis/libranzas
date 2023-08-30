@@ -54,7 +54,7 @@ const links = [
     },
     {
         label: 'Usuarios',
-        route: '/Login',
+        route: '/Usuarios',
         icon: <FaUsers size={20} />,
         roles: ['1']
     },
@@ -69,12 +69,10 @@ const links = [
 
 
 const Navbar = () => {
-    const { auth,outLogin,user,rol} = useAuth();
+    const { outLogin,user,rol} = useAuth();
     const navigate = useNavigate();
     const [showdropuser, setshowdropuser] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
-
 
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
 
@@ -90,14 +88,6 @@ const Navbar = () => {
         outLogin()
         navigate('/login')
     }
-
-    const dark = () => {
-        outLogin()
-        navigate('/login')
-    }
-
-
-
     return (
 
         <>
@@ -124,20 +114,17 @@ const Navbar = () => {
                                         <img className="w-8 h-8 rounded-full" src={profilePic} alt="user photo" />
                                     </button>
                                 </div>
-                                <div className={`${(!showdropuser ? 'hidden' : 'show')} shadow-2xl border px-6 50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
+                                <div className={`${(!showdropuser ? 'hidden' : 'show')}  border px-6 50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
 
                                     <ul className="py-1" role="none">
                                         <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Configuración</a>
                                         </li>
                                         <li>
                                             <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
                                         </li>
                                         <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" onClick={handlerCerrarSesion} role="menuitem">Sign out</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" onClick={handlerCerrarSesion} role="menuitem">Cerrar sesión</a>
                                         </li>
                                     </ul>
                                 </div>

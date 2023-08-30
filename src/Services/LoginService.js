@@ -1,3 +1,4 @@
+import Axios from "../Api/Axios";
 import  axiosPrivate  from "../Api/Axios";
 
 const URl_AUTH={
@@ -9,14 +10,14 @@ const URl_AUTH={
 
 
 export const loginUser = async (credenciales) => {
-    const response = await axiosPrivate.post(URl_AUTH.Login,credenciales )
+    const response = await Axios.post(URl_AUTH.Login,credenciales )
     return response;
 
   };
 
 
   export const logout = async (RequestTokens) => {
-    const response = await axiosPrivate.post(URl_AUTH.DeleteToken,RequestTokens)
+    const response = await Axios.post(URl_AUTH.DeleteToken,RequestTokens)
     return response;
 
   };

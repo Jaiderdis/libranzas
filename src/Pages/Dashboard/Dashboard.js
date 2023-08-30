@@ -1,83 +1,50 @@
-// import axios from 'axios';
-// import React, { useEffect } from 'react'
-// import consumo from '../Service/Axios/Axios';
+'use client'
+import React from 'react'
+import { Bar ,Line,Radar,Pie} from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
 
-// const Home = () => {
-//     useEffect(()=>{
-//         (
-//             async ()=>{
-//                 const response=await consumo.get('/Archivo/prueba')
-//             }
-//         )();
-//     },[])
-
-//   return (
-//     <div>Home</div>
-//   )
-// }
-
-// export default Home
-
-
-import React, { useEffect ,useState} from 'react';
-
-import Navbar from '../../Componentes/Navbar/Navbar';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Loading } from '../../Componentes/Loading/Loading';
-
-
+Chart.register(...registerables);
 const Dashboard = () => {
-  const axiosPrivate = useAxiosPrivate();
-  const [users, setUsers] = useState();
-  const navigate= useNavigate();
-  const location= useLocation();
+  const data = {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+    datasets: [
+      {
+        label: 'Ventas',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+      },
+    ],
+  };
 
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const getUsers = async () => {
-      try {
-        const response = await axiosPrivate.get('/Archivos/prueba', { signal });
-        setUsers(response.data);
-      } catch (err) {
-        // Handle error, e.g., redirect to login
-        console.log('Error fetching users:'+err);
-      }
-    };
-
-    getUsers();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  //  const user = useSelector((state) => state.user);
-
-  // if (!user) {
-  //   return null; // Manejo alternativo si el usuario no está autenticado
-  // }
-
-  // const isAdmin = user.roles.includes('admin');
-  // const isUser = user.roles.includes('user');
 
   return (
     <>
-      <article>
-            <h2>Users List</h2>
-            {users? users.map((persona, index) => (
-        <h1 key={index}>{persona}</h1>
-      )):<Loading></Loading>}
-        </article>
-      
+      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-cyan-800 dark:bg-gray-800">
+        <h1> <strong> INICIO</strong></h1>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="flex items-center justify-center h-72 rounded bg-gray-50 dark:bg-gray-800">
+          <Bar data={data} />
+        </div>
+        <div class="flex items-center justify-center h-72 rounded bg-gray-50 dark:bg-gray-800">
+          <Line data={data} />
+        </div>
 
+      </div>
+      <div class="grid">
+        <div class="flex items-center justify-center h-96  rounded bg-gray-50 dark:bg-gray-800">
+          <Pie data={data} />
+        </div>
+       
+
+      </div>
+     
     </>
 
-  );
-};
 
+  )
+}
 
 export default Dashboard

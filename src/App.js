@@ -17,8 +17,10 @@ import CargarArchivos from './Pages/CargarArchivos/CargarArchivos';
 import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion';
 import Unauthorized from './Pages/Unauthorized/Unauthorized';
 import Dashboard from './Pages/Dashboard/Dashboard';
-import useAuth from './hooks/useAuth';
+import Usuarios from './Pages/Usuarios/Usuarios';
+
 // ----Pages---
+
 
 
 
@@ -32,6 +34,7 @@ const ROLES = {
 function App() {
 
   return (
+
     <Routes >
 
       <Route element={<LayoutLogin />}>
@@ -42,23 +45,27 @@ function App() {
         <Route path="/Unauthorized" element={<Unauthorized />} />
       </Route>
 
+      
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />} >
 
-      <Route element={<ProtectedRoute />}>
-        <Route element={<Layout />} >
+            <Route path="/" element={<Dashboard />} />
 
-          <Route path="/" element={<Dashboard />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.Super, ROLES.Admin]} />}>
+              <Route path="/ValidarInformacion" element={<ValidarInformacion />} />
+              <Route path="/Usuarios" element={<Usuarios />} />
+            </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Super,ROLES.Admin]}/>}>
-            <Route path="/ValidarInformacion" element={<ValidarInformacion />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.provee, ROLES.Super]} />}>
+              <Route path="/CargarArchivos" element={<CargarArchivos />} />
+            </Route>
+
+
           </Route>
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.provee,ROLES.Super]}/>}>
-            <Route path="/CargarArchivos" element={<CargarArchivos />} />
-          </Route>
-
-
         </Route>
-      </Route>
+
+      
+
     </Routes>
   );
 }
