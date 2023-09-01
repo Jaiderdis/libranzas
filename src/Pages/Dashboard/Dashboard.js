@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-cyan-800 dark:bg-gray-800">
+      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong> INICIO</strong></h1>
       </div>
       <div class="grid grid-cols-2 gap-4 mb-4">

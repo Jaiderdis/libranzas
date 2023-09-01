@@ -25,14 +25,13 @@ const resCriterio = {
     },
 
 }
-
 const criteriosBlackList = ['criterio27','criterio25']
-
-
 
 
 const TbodyCriterios = ({ lista }) => {
 
+
+    
     const obtenerEstilos = (item, criterio) => {
 
         if (resCriterio.CUMPLE.Resultado === item[criterio]) {

@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import profilePic from '../Images/user-default.png'
 import loader from '../Images/loader-ex.png'
 import useAuth from '../../hooks/useAuth';
@@ -71,7 +71,8 @@ const links = [
 const Navbar = () => {
     const { outLogin,user,rol} = useAuth();
     const navigate = useNavigate();
-    const [showdropuser, setshowdropuser] = useState(false)
+    const [showdropuser, setShowdropuser] = useState(false);
+    const dropdownRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
@@ -79,11 +80,23 @@ const Navbar = () => {
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen)
     }
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setShowdropuser(false);
+            }
+        };
 
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
     const togglePerfil = () => {
-        setshowdropuser(!showdropuser)
-    }
-
+        setShowdropuser(!showdropuser);
+    };
     const handlerCerrarSesion = () => {
         outLogin()
         navigate('/login')
@@ -114,7 +127,7 @@ const Navbar = () => {
                                         <img className="w-8 h-8 rounded-full" src={profilePic} alt="user photo" />
                                     </button>
                                 </div>
-                                <div className={`${(!showdropuser ? 'hidden' : 'show')}  border px-6 50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
+                                <div ref={dropdownRef} className={`${(!showdropuser ? 'hidden' : 'show')}  border px-6 50  text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
 
                                     <ul className="py-1" role="none">
                                         <li>

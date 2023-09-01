@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TbodyCriterios from './TbodyCriterios';
+import Modal from '../../Modal/ModalListaNegra';
+import CriteriosContext from '../../../Context/CriteriosContext';
 
 // const lista = [
 //     {
@@ -173,8 +175,6 @@ import TbodyCriterios from './TbodyCriterios';
 
 
 const TableCriterios = ({ lista }) => {
-
-
     return (
         !lista ? <h1>No hay datos</h1>
             :
@@ -216,8 +216,9 @@ const TableCriterios = ({ lista }) => {
                             <th className="px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-white border bg-cyan-700" scope="“col”">Archivos</th>
                         </tr>
                     </thead>
-                    <TbodyCriterios lista={lista}/>
+                    <TbodyCriterios lista={lista} />
                 </table>
+
             </div>
     )
 }

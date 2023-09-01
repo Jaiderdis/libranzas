@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.fondo{
+    background-image: url('../img/LOGIN_EXPONENCIAL.jpg');
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+
+
+
+.fSizeTitle{
+    font-size: 2.7rem;
+}
+
+
+.bg-form-login{
+    background-color: #00364fc6;
+    
+  }
+
+
+  .text-color-bienvenido{
+    
+    color: #00496c;
+  }

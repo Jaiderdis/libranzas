@@ -3,7 +3,7 @@ import React from 'react'
 const CargarArchivos = () => {
   return (
     <>
-      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-cyan-800 dark:bg-gray-800">
+      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong>SUBIR EXCEL</strong></h1>
       </div>
 
@@ -24,12 +24,12 @@ const CargarArchivos = () => {
         </div>
 
         <div className="flex flex-wrap m-8 justify-center gap-6">
-          <button type="button" className="focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Subir Archivo Excel</button>
+          <button type="button" className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Subir Archivo Excel</button>
         </div>
 
       </div>
       <div>
-        <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-cyan-800 dark:bg-gray-800">
+        <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
           <h1> <strong>SUBIR DOCUMENTOS</strong></h1>
         </div>
 
@@ -50,7 +50,7 @@ const CargarArchivos = () => {
           </div>
 
           <div className="flex flex-wrap m-8 justify-center gap-6">
-            <button type="button" className="focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Subir Documentos</button>
+            <button type="button" className="focus:outline-none text-white  bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Subir Documentos</button>
           </div>
 
         </div>

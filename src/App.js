@@ -18,6 +18,7 @@ import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion';
 import Unauthorized from './Pages/Unauthorized/Unauthorized';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Usuarios from './Pages/Usuarios/Usuarios';
+import { CriteriosProvider } from './Context/CriteriosContext';
 
 // ----Pages---
 
@@ -52,7 +53,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Super, ROLES.Admin]} />}>
-              <Route path="/ValidarInformacion" element={<ValidarInformacion />} />
+              <Route path="/ValidarInformacion" element={<CriteriosProvider><ValidarInformacion /></CriteriosProvider>} />
               <Route path="/Usuarios" element={<Usuarios />} />
             </Route>
 
