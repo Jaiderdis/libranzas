@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode:"class",
   content: ["./src/**/*.{html,js}"],
+  
   theme: {
     extend: {
 
@@ -11,7 +13,14 @@ module.exports = {
         'secondary':{
           500:'#019bdd',
           600:'#04638c',
+        },
+        'darkPrimary':{
+          500:'#20232d'
+        },
+        'darkSecondary':{
+          500:'#1e222b'
         }
+
       },
     },
     screens: {

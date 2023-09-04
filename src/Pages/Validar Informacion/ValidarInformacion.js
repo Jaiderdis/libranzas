@@ -14,6 +14,7 @@ import { Loading } from '../../Componentes/Loading/Loading';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CriteriosContext from '../../Context/CriteriosContext';
 
+
 const tipoIncoporacion = {
   Incorporado: '1',
   NoIncorporado: '2'
@@ -67,13 +68,6 @@ const ValidarInformacion = () => {
 
   }
 
-  // const openModal = () => {
-  //   setShowModal(true);
-  // };
-
-  // const closeModal = () => {
-  //   setShowModal(false);
-  // };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -96,19 +90,6 @@ const ValidarInformacion = () => {
 
   }
 
-  // const handleInputChange = (event) => {
-  //  const value = event.target.value;
-  //   const name = event.target.id;
-
-    
-  //   const numericInput = value.replace(/[^0-9]/g, '');
- 
-  //   const formattedInput = numericInput.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-  //   setInputValue(formattedInput);
-  //   onValueChange({name,value});
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -127,12 +108,10 @@ const ValidarInformacion = () => {
   }
 
 
-
-
   return (
 
     <>
-      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-cyan-800 dark:bg-gray-800">
+      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong> VALIDAR INFORMACIÓN</strong></h1>
       </div>
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
@@ -251,7 +230,7 @@ const ValidarInformacion = () => {
               </div>
             </div>
             <div className="flex flex-wrap m-8 justify-center gap-6">
-              <button type="submit" className="focus:outline-none text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
+              <button type="submit" className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
 
               <button type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Criterios Revisados</button>
             </div>
@@ -264,12 +243,13 @@ const ValidarInformacion = () => {
 
 
 
-          <div className="flex flex-wrap m-8 justify-center gap-6">
-            <button type="button" className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Comprar Libranzas</button>
-          </div>
+         
 
         </div>
       </div>
+
+
+ 
 
 
 

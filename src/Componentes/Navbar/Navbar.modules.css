@@ -1,8 +1,13 @@
-.show{
+.perfilshow{
+
     position: absolute;
     top: 100%;
-    right: 0%;
+    right: 0.2%;
     margin: 0px;
 
 
+}
+
+.perfilhidden{
+    display: none;
 }
