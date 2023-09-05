@@ -79,10 +79,10 @@ const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isPerfilOpen, setIsPerfilOpen] = useState(false);
     // si es true es claro y si es false es oscuro
-    const [modeDark, setModeDark] = useState(() => JSON.parse(localStorage.getItem('modeDark'))===true ? true : false);
+   
 
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
-
+    const [modeDark, setModeDark] = useState(() => JSON.parse(localStorage.getItem('modeDark'))===true ? true : false);
     useEffect(()=>{
         if(modeDark){
             document.documentElement.classList.add('dark');

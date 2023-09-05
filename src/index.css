@@ -7,14 +7,18 @@
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap');
 
 
-body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+  html {
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+  
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -32,5 +36,6 @@ input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
 
 

@@ -4,7 +4,7 @@ import Navbar from "../Navbar/Navbar"
 const Layout = () => {
     
     return (
-        <main className="App dark:bg-black  min-h-screen">
+        <main className="App dark:bg-black  min-h-screen ">
             <Navbar />
             <div className="p-4 sm:ml-64">
 
