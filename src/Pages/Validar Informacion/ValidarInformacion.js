@@ -111,16 +111,13 @@ const ValidarInformacion = () => {
   return (
 
     <>
-      <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
-        <h1> <strong> VALIDAR INFORMACIÓN</strong></h1>
-      </div>
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
 
         <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800">
           <form action="#" method="POST" onSubmit={handleSubmit} className="w-full max-w-3xl">
             <div className="flex flex-wrap -mx-3 m-4">
               <div className="w-full md:w-1/3 px-3">
-                <label className="block tracking-wide text-gray-700 text-sm  mb-2" for="grid-first-name">
+                <label className="block tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-first-name">
                   Valor Compra
                 </label>
                 <input
@@ -132,7 +129,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3">
-                <label className="block  tracking-wide text-gray-700 text-sm  mb-2" for="grid-last-name">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-last-name">
                   Saldo Cartera
                 </label>
                 <input
@@ -144,7 +141,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm  mb-2" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-city">
                   Saldo Pensionados Cartera
                 </label>
                 <input
@@ -161,7 +158,7 @@ const ValidarInformacion = () => {
             <div className="flex flex-wrap -mx-3 m-8">
 
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm mb-2" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" for="grid-city">
                   Saldo No Pensionados Cartera
                 </label>
                 <input
@@ -173,7 +170,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm  mb-2" for="grid-zip">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-zip">
                   Tasa Usura %
                 </label>
                 <input
@@ -187,7 +184,7 @@ const ValidarInformacion = () => {
 
               </div>
               <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label className="block  tracking-wide text-gray-700 text-sm font-bold mb-2" for="grid-state">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2" for="grid-state">
                   Tipo
                 </label>
                 <div className="relative">
@@ -205,7 +202,7 @@ const ValidarInformacion = () => {
             <div className="flex flex-wrap -mx-3 m-8">
 
               <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
-                <label className="block  tracking-wide text-gray-700 text-sm mb-2" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm mb-2" for="grid-city">
                   Total Cartera Incorporada
                 </label>
                 <input
@@ -217,7 +214,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
-                <label className="block  tracking-wide text-gray-700 text-sm  mb-2" for="grid-zip">
+                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm  mb-2" for="grid-zip">
                   Total Cartera no Incorporada
                 </label>
                 <input
@@ -230,9 +227,9 @@ const ValidarInformacion = () => {
               </div>
             </div>
             <div className="flex flex-wrap m-8 justify-center gap-6">
-              <button type="submit" className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
+              <button type="submit" className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
 
-              <button type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Criterios Revisados</button>
+              <button type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">Criterios Revisados</button>
             </div>
           </form>
           {/* tabla */}

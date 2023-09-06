@@ -71,8 +71,9 @@ const links = [
 
 
 const Navbar = () => {
-    const { outLogin, user, rol } = useAuth();
+    const { outLogin, user, rol,toggleModeDark} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     let SideBarRef = useRef();
     let btnSideBarRef = useRef();
     let PerfilRef = useRef();
@@ -82,22 +83,10 @@ const Navbar = () => {
    
 
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
-    const [modeDark, setModeDark] = useState(() => JSON.parse(localStorage.getItem('modeDark'))===true ? true : false);
-    useEffect(()=>{
-        if(modeDark){
-            document.documentElement.classList.add('dark');
-        }else{
-            document.documentElement.classList.remove('dark');
-        }
-            
-    },[modeDark])
 
+  
 
-    const toggleModeDark=()=>{
-        setModeDark(!modeDark)
-        localStorage.setItem('modeDark',JSON.stringify(!modeDark))
-    }
-
+   
 
 
 
@@ -159,7 +148,7 @@ const Navbar = () => {
                                     </button>
                                 </div>
 
-                                <div className={`${!isPerfilOpen ? 'perfilhidden' : 'perfilshow'}  border px-6 py-4  text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
+                                <div className={`${!isPerfilOpen ? 'perfilhidden' : 'perfilshow'}  border px-6 py-4  text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-darkPrimary-500 dark:border-gray-700 dark:divide-gray-600`} id="dropdown-user">
                                     <span className='flex justify-center p-3' > <img className="w-8 h-8 rounded-full " src={profilePic} alt="user photo" /></span>
                                     <span className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300"><strong> {user}</strong></span>
                                     <ul className="py-1" role="none">
@@ -196,7 +185,7 @@ const Navbar = () => {
                     <ul className="space-y-2 font-medium">
                         {filteredLinks.map(({ label, route, icon }) =>
                             <li key={label}>
-                                <a href={route} className='flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 transition  ease-in-out delay-50 hover:bg-gray-100 hover:-translate-y-1 dark:hover:bg-gray-700 dark:hover:text-white group"'>
+                                <a href={route} className={`${(route===location.pathname?'bg-primary-500 dark:bg-gray-500 dark:hover:bg-gray-700 text-white hover:bg-secondary-600':'hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700')} flex items-center p-2 text-gray-900 rounded-lg  transition  ease-in-out delay-50  hover:-translate-y-1  dark:hover:text-white group`}>
                                     {icon}
                                     <span className="ml-3">{label}</span>
 

@@ -19,6 +19,7 @@ import Unauthorized from './Pages/Unauthorized/Unauthorized';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Usuarios from './Pages/Usuarios/Usuarios';
 import { CriteriosProvider } from './Context/CriteriosContext';
+import useAuth from './hooks/useAuth';
 
 // ----Pages---
 
@@ -32,8 +33,22 @@ const ROLES = {
 }
 
 
-function App() {
 
+function App() {
+  const { modeDark} = useAuth();
+
+  useEffect(() => {
+
+    if (modeDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  
+  
+  }, [modeDark])
+
+ 
   return (
 
     <Routes >

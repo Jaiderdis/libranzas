@@ -55,7 +55,7 @@ const TbodyCriterios = ({ lista }) => {
                 <tr className="bg-cyan-600 border-b border-white" key={index}>
 
                     {/* th libranza */}
-                    <th scope="row" className="px-6 py-4 font-medium bg-cyan-700 text-cyan-50 whitespace-nowrap dark:text-cyan-100">
+                    <th scope="row" className="px-6 py-3 text-sm text-center font-medium whitespace-nowrap dark:text-white border-darkSecondary-500 border bg-primary-500">
                         {item.libranza}
                     </th>
 
@@ -64,7 +64,7 @@ const TbodyCriterios = ({ lista }) => {
 
                     {Object.keys(lista[0]).filter(key => key !== 'libranza').map(criterio => (
 
-                        <td className={`${obtenerEstilos(item, criterio)} px-6 py-4 text-center whitespace-nowrap border border-white`}
+                        <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
                             key={criterio}>
 
                             {item[criterio] == 'CUMPLE' ?
@@ -79,7 +79,7 @@ const TbodyCriterios = ({ lista }) => {
 
                     {/* Opcion descargar archivos */}
 
-                    <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-cyan-700"><span className=' flex justify-center cursor-pointer '><HiDocumentArrowDown size={25} className='hover:-translate-y-1' /></span></td>
+                    <td className="px-6 py-3 text-sm text-center font-medium whitespace-nowrap dark:text-white border-darkSecondary-500 border bg-primary-500"><span className=' flex justify-center cursor-pointer '><HiDocumentArrowDown size={25} className='hover:-translate-y-1' /></span></td>
 
                 </tr>
             ))}

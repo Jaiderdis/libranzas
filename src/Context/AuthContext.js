@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState()
     const [rol, setRol] = useState()
+    const [modeDark, setModeDark] = useState(() => localStorage.getItem('theme')==='dark' ? true : false);
 
     function saveUser(datos) {
         if(datos){
@@ -50,6 +51,13 @@ export const AuthProvider = ({ children }) => {
         setAuth(null);
     }
 
+    const toggleModeDark=()=>{
+        
+        localStorage.setItem('theme',!modeDark?'dark':'light')
+        setModeDark(!modeDark)
+    }
+
+
 
     return (
         <AuthContext.Provider value={
@@ -65,6 +73,8 @@ export const AuthProvider = ({ children }) => {
                 decodeJwt,
                 rol,
                 setRol,
+                toggleModeDark,
+                modeDark
 
             }}>
 

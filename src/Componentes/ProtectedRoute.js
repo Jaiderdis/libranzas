@@ -7,11 +7,11 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const ProtectedRoute = () => {
 
-  const { auth, cookies, IsLoading,outLogin, setUser,setRol} = useAuth();
+  const { auth, cookies, IsLoading, outLogin, setUser, setRol,modeDark, toggleModeDark } = useAuth();
 
 
   useEffect(() => {
-    
+
     if (cookies.token) {
       const decoded = jwt_decode(cookies.token)
       setUser(decoded.name)
@@ -26,12 +26,14 @@ const ProtectedRoute = () => {
 
   }, [])
 
+ 
+
 
 
   return (
 
     IsLoading ? <Loading /> :
-      !auth ?<Navigate to={'/login'} /> :
+      !auth ? <Navigate to={'/login'} /> :
         <Outlet />
 
 
