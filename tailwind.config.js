@@ -48,8 +48,10 @@ module.exports = {
       'xl': '1280px',
       // => @media (min-width: 1280px) { ... }
 
-      '2xl': '1536px',
-      // => @media (min-width: 1536px) { ... }
+      '2xl': '1446px',
+      // => @media (min-width: 1446px) { ... }
+      '3xl': '2000px'
+      // => @media (min-width: 2000px) { ... }
 
     },
 
