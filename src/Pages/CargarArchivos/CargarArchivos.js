@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { Loading } from '../../Componentes/Loading/Loading';
+
+const URL_CargarFiles={
+  Excel:'Archivos/CargarArchivo',
+  PDFs:'Archivos/CargarPDF'
+}
+
 
 const CargarArchivos = () => {
   const [selectedFileExcel, setSelectedFileExcel] = useState(null);
+  const [loadingSaveFile, setLoadingSaveFile] = useState(false);
   const [selectedFileDocument, setSelectedFileDocument] = useState(null);
   const [draggedExcelOver, setDraggedExcelOver] = useState(false);
   const [draggedDocumentOver, setDraggedDocumentOver] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [abortController, setAbortController] = useState(null);
+
+  const axiosPrivate = useAxiosPrivate();
 
   const handleDragOverExcel = (e) => {
     e.preventDefault();
@@ -56,9 +70,74 @@ const CargarArchivos = () => {
   };
 
 
+  const handleSubmitExcel= async ()=>{
+    if(!selectedFileExcel){
+      alert('Por favor, selecciona un archivo antes de subirlo.');
+      return;
+    }
+
+    const controller = new AbortController();
+    setAbortController(controller);
+
+    try {
+      setLoadingSaveFile(true)
+      const formData = new FormData();
+      formData.append('Archivo', selectedFileExcel);
+
+      const response = await axiosPrivate.post(URL_CargarFiles.Excel, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Respuesta de la API:', response.data);
+
+    } catch (error) {
+      console.error('Error al subir el archivo:', error);
+
+    }finally{
+      setLoadingSaveFile(false)
+    }
+
+  }
+
+
+  const handleSubmitDocument= async ()=>{
+    if(!selectedFileDocument){
+      alert('Por favor, selecciona un archivo antes de subirlo.');
+      return;
+    }
+
+    const controller = new AbortController();
+    setAbortController(controller);
+
+    try {
+      setLoadingSaveFile(true)
+      const formData = new FormData();
+      formData.append('Archivo', selectedFileDocument);
+
+      const response = await axiosPrivate.post(URL_CargarFiles.PDFs, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Respuesta de la API:', response.data);
+      alert('Archivo subido exitosamente.');
+    } catch (error) {
+      console.error('Error al subir el archivo:', error);
+      alert('Error al subir el archivo.');
+    }finally{
+      setLoadingSaveFile(false)
+    }
+
+  }
+
+
 
   return (
     <>
+    {loadingSaveFile&&<Loading/>}
       <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong>SUBIR EXCEL</strong></h1>
       </div>
@@ -115,6 +194,7 @@ const CargarArchivos = () => {
         <div className="flex flex-wrap m-8 justify-center gap-6">
           <button
             type="button"
+            onClick={handleSubmitExcel}
             className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800"
           >
             Subir Archivo Excel
@@ -180,6 +260,7 @@ const CargarArchivos = () => {
           <div className="flex flex-wrap m-8 justify-center gap-6">
             <button
               type="button"
+              onClick={handleSubmitDocument}
               className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">
               Subir Documentos
             </button>
