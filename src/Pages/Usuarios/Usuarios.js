@@ -32,45 +32,53 @@ const Usuarios = () => {
   const [users, setUsers] = useState();
   const navigate= useNavigate();
   const location= useLocation();
+  const [abortController, setAbortController] = useState(null);
 
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const signal = controller.signal;
+
+  //   const getUsers = async () => {
+  //     try {
+  //       const response = await axiosPrivate.get('/Archivos/prueba', { signal });
+  //       setUsers(response.data);
+  //     } catch (err) {
+  //       // Handle error, e.g., redirect to login
+  //       console.log('Error fetching users:'+err);
+  //     }
+  //   };
+
+  //   getUsers();
+
+  //   return () => {
+  //     controller.abort();
+  //   };
+  // }, []);
+
+
+  const handleSubmit= async ()=>{
+
     const controller = new AbortController();
-    const signal = controller.signal;
+    setAbortController(controller);
+    try {
+      const response = await axiosPrivate.get('/Archivos/prueba', { signal:controller.signal })
+      console.log('Respuesta de la API:', response.data);
 
-    const getUsers = async () => {
-      try {
-        const response = await axiosPrivate.get('/Archivos/prueba', { signal });
-        setUsers(response.data);
-      } catch (err) {
-        // Handle error, e.g., redirect to login
-        console.log('Error fetching users:'+err);
-      }
-    };
+    } catch (error) {
+      console.error('Error al subir el archivo:', error);
+    }finally{
+      setAbortController(null);
+    }
 
-    getUsers();
+  }
 
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  //  const user = useSelector((state) => state.user);
-
-  // if (!user) {
-  //   return null; // Manejo alternativo si el usuario no está autenticado
-  // }
-
-  // const isAdmin = user.roles.includes('admin');
-  // const isUser = user.roles.includes('user');
 
   return (
     <>
+    <button onClick={handleSubmit}>consumir</button>
       <article>
-            <h2>Users List</h2>
-            {users? users.map((persona, index) => (
-        <h1 key={index}>{persona}</h1>
-      )):<Loading></Loading>}
+           
         </article>
       
 

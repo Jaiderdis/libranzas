@@ -9,7 +9,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import Modal from '../../Componentes/Modal/ModalListaNegra';
 
 import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios';
-import { revisarCriterios } from '../../Services/CriteriosService';
+import { revisarCriterios,CriteriosRevisados } from '../../Services/CriteriosService';
 import { Loading } from '../../Componentes/Loading/Loading';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CriteriosContext from '../../Context/CriteriosContext';
@@ -90,14 +90,31 @@ const ValidarInformacion = () => {
 
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmitRevisar = async (e) => {
     e.preventDefault();
     try {
 
       setIsLoading(true);
 
       const response = await revisarCriterios(axiosPrivate, valores);
-      setLista(response.data)
+      setLista(response.data!=[]?response.data:null)
+
+    } catch (error) {
+
+    } finally {
+      setIsLoading(false)
+    }
+
+  }
+  const handleSubmitRevisados = async (e) => {
+    e.preventDefault();
+    try {
+
+      setIsLoading(true);
+
+
+      const response = await CriteriosRevisados(axiosPrivate);
+      setLista(response.data!=[]?response.data:null)
 
     } catch (error) {
 
@@ -114,7 +131,7 @@ const ValidarInformacion = () => {
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
 
         <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800">
-          <form action="#" method="POST" onSubmit={handleSubmit} className="w-full max-w-3xl">
+          <div className="w-full max-w-3xl">
             <div className="flex flex-wrap -mx-3 m-4">
               <div className="w-full md:w-1/3 px-3">
                 <label className="block tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-first-name">
@@ -227,14 +244,14 @@ const ValidarInformacion = () => {
               </div>
             </div>
             <div className="flex flex-wrap m-8 justify-center gap-6">
-              <button type="submit" className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
+              <button onClick={handleSubmitRevisar} className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
 
-              <button type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">Criterios Revisados</button>
+              <button onClick={handleSubmitRevisados} type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">Criterios Revisados</button>
             </div>
-          </form>
+          </div>
           {/* tabla */}
 
-          {IsLoading ? <Loading /> : <TableCriterios lista={lista} />}
+          {IsLoading ? <Loading /> :lista&& <TableCriterios lista={lista} />}
 
           {/* tabla */}
 

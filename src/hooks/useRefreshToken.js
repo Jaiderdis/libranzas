@@ -2,7 +2,7 @@ import axiosPrivate from '../Api/Axios';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-    const {cookies,saveUser} = useAuth();
+    const {cookies,saveUser,outLogin} = useAuth();
 
     const refresh = async () => {
   
@@ -19,6 +19,8 @@ const useRefreshToken = () => {
             saveUser({ token: response.data.result.token, refreshToken:response.data.result.refreshToken})
         }else if(response?.data?.message==='El token aun no ha expirado'){
             return cookies.token;
+        }else{
+            outLogin()
         }
         
        
