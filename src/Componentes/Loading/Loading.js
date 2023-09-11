@@ -13,13 +13,13 @@ export const Loading = () => {
         // </div>
 
 
-<div class="fixed z-50 overflow-y-auto top-0 w-full left-0 " id="modal">
-  <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 transition-opacity">
-      <div class="absolute inset-0 bg-gray-900 opacity-75" />
+<div className="fixed z-50 overflow-y-auto top-0 w-full left-0 " id="modal">
+  <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div className="fixed inset-0 transition-opacity">
+      <div className="absolute inset-0 bg-gray-900 opacity-75" />
     </div>
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-    <div class="sm:inline-block align-center rounded-lg text-left overflow-hidden  transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  h-screen flex items-center  sm:h-full " role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+    <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+    <div className="sm:inline-block align-center rounded-lg text-left overflow-hidden  transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  h-screen flex items-center  sm:h-full " role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 
              <div role="status" className='flex justify-center'>
                  <svg aria-hidden="true" className="inline w-28 h-28 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

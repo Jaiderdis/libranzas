@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaXmark } from 'react-icons/fa6';
 import { AiFillCaretDown } from "react-icons/ai";
 import { descargarArchivo } from "../../Services/CriteriosService";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -61,29 +62,45 @@ export default function ModalArchivos({ libranza, setShowModal, show }) {
 
   }
 
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [show]);
+
 
   return (
 
 
-    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${(!show ? 'hidden' : '')}`} >
+    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${(!show ? 'hidden' : '')}`} onClick={() => setShowModal(false)} >
       <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity">
           <div className="absolute inset-0 bg-gray-900 opacity-75" />
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-        <div className="inline-block align-center rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-          <div className="bg-primary-500 text-white px-4 py-3 ">
+        <div onClick={stopPropagation} className="inline-block align-center rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div className="bg-primary-500 text-white px-4 py-3 flex justify-between">
             <h2>Libranza {libranza}</h2>
+            <div><span className="cursor-pointer" onClick={() => setShowModal(false)}><FaXmark /></span></div>
           </div>
           <div className="bg-white px-4 py-8 flex flex-col  gap-4">
             {/* <label className="font-medium text-gray-800">{datos.Content}</label> */}
             <div className="mx-16  px-3  mb-3 md:mb-0 MobileL:mx-0">
-              <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2" for="grid-state">
+              <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2">
                 Documento
               </label>
               <div className="relative">
-                <select id='prueba' onChange={handleSelectedArchivo} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-700" >
-                  <option selected disabled >Seleccionar un documento</option>
+                <select defaultValue={'DEFAULT'} id='prueba' onChange={handleSelectedArchivo} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-700" >
+                  <option value="DEFAULT" disabled >Seleccionar un documento</option>
                   {listaDocumentos.map(({ label, value }) =>
                     <option key={value} value={value}>{label}</option>
 

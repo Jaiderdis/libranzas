@@ -4,24 +4,22 @@ const CriteriosContext =createContext({})
 
 
 export const CriteriosProvider = ({ children }) => {
-    const [showModal, setShowModal] = useState(false);
-    const [titleModal, setTitleModal] = useState();
-    const [contentModal, setContentModal] = useState();
 
-    const openModal=()=>{
-        setShowModal(true)
-    };
-    const closeModal=()=>{
-        setShowModal(false)
-    };
+    const [showModalBlackList,setshowModalBlackList]=useState(false)
+    const [dataModalBlackList,setdataModalBlackList]=useState({
+        libranza:'',
+        criterio:''
+    })
   
 
     return (
         <CriteriosContext.Provider value={
             {
-                showModal,
-                openModal,
-                closeModal
+            showModalBlackList,
+            setshowModalBlackList,
+            dataModalBlackList,
+            setdataModalBlackList
+
             }}>
 
             {children}

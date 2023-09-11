@@ -1,46 +1,85 @@
 import React from 'react'
+import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
 
-const TableListaNegra = () => {
+import '../TableListaNegra/TableListaNegra.modules.css'
+import { VscError } from 'react-icons/vsc';
+import { RiErrorWarningFill } from 'react-icons/ri';
+
+const TableListaNegra = ({ data }) => {
   return (
+    <div className=' relative   w-full'>
+      <div className='m-5 flex justify-center flex-col items-center gap-3'>
+        <div className='text-center'>
+          <h1 className='font-bold text-base'>Datos Entidad</h1>
+        </div>
 
-    <tr className="bg-cyan-600 border-b border-white">
-      <th scope="row" className="px-6 py-4 font-medium bg-cyan-700 text-cyan-50 whitespace-nowrap dark:text-cyan-100">
-        78453584395
-      </th>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span> </td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-red-600"><span className='flex justify-center'><VscError size={27} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-red-600"><span className='flex justify-center'><VscError size={27} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border cursor-pointer border-white bg-orange-600 hover:bg-gray-500" ><span className='flex justify-center'><RiErrorWarningFill size={29} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border cursor-pointer border-white bg-orange-600 hover:bg-gray-500"><span className='flex justify-center'><RiErrorWarningFill size={29} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border cursor-pointer border-white bg-orange-600 hover:bg-gray-500"><span className='flex justify-center'><RiErrorWarningFill size={29} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-red-600"><span className='flex justify-center'><VscError size={27} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border cursor-pointer border-white bg-orange-600 hover:bg-gray-500"><span className='flex justify-center'><RiErrorWarningFill size={29} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border cursor-pointer border-white bg-orange-600 hover:bg-gray-500"><span className='flex justify-center'><RiErrorWarningFill size={29} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-green-600"><span className='flex justify-center'><FaCircleCheck size={25} className='' /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-red-600"><span className='flex justify-center'><VscError size={27} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-red-600"><span className='flex justify-center'><VscError size={27} /></span></td>
-      <td className="px-6 py-4 text-center whitespace-nowrap border border-white bg-cyan-700"><span className=' flex justify-center cursor-pointer'><HiDocumentArrowDown size={25} /></span></td>
+        <div className='grid grid-cols-2 MobileL:grid-cols-1 gap-7 mt-3 mx-12'>
+          <div className=''>
+            <label className='font-bold text-base'>Nombre:</label>
+            <p>{data.dataEntidad.nombre}</p>
+          </div>
+          <div className=''>
+            <label className='font-bold text-base'>Nit:</label>
+            <p>{data.dataEntidad.nit}</p>
+          </div>
+          <div >
+            <label className='font-bold text-base'>Telefono:</label>
+            <p>4353234</p>
+          </div>
+          <div >
+            <label className='font-bold text-base'>Pais:</label>
+            <p>{data.dataEntidad.pais}</p>
+          </div>
+        </div>
+
+      </div>
+      <div className="w-full overflow-x-auto flex justify-center  shadow-md rounded-lg">
+        <table className="w-full">
+          <thead>
+            <tr className='bg-primary-500 '>
+              <th className='p-3' > <h1 className='font-bold MobileS:text-xs text-base text-white w-4/5 '>Datos Encontrados</h1></th>
+              <th className='p-3' > <h1 className='font-bold MobileS:text-xs text-base text-white w-4/5 '>Opcion</h1></th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            {data.dataEncontrada.map((item, index) => (
+              <tr >
+                <td className='p-5 border-2 '>
+                  <div className='grid grid-cols-2 MobileL:grid-cols-1 gap-4 mx-3'>
+                    {/* <div >
+                      <label className='font-bold text-base'>Nombre:</label>
+                      <p>Colpenciones</p>
+                    </div>*/}
+                    {Object.keys(item).map(dato => (
+                      <div >
+                        <label className='font-bold text-base uppercase'>{dato}:</label>
+                        <p>{item[dato]}</p>
+                      </div>
 
 
-    </tr>
+
+                    )
+                    )}
+                  </div>
+
+                </td>
+                <td className='border-2 '>
+                  <div className='flex justify-center items-center'>
+                    <input type='checkbox' />
+                  </div>
+                </td>
+
+              </tr>
+            ))}
+
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
 
   )
 }

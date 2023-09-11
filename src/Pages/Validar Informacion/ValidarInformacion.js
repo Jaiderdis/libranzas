@@ -134,7 +134,7 @@ const ValidarInformacion = () => {
           <div className="w-full max-w-3xl">
             <div className="flex flex-wrap -mx-3 m-4">
               <div className="w-full md:w-1/3 px-3">
-                <label className="block tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-first-name">
+                <label className="block tracking-wide text-gray-700 text-sm dark:text-white mb-2">
                   Valor Compra
                 </label>
                 <input
@@ -146,7 +146,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3">
-                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-last-name">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" >
                   Saldo Cartera
                 </label>
                 <input
@@ -158,7 +158,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" >
                   Saldo Pensionados Cartera
                 </label>
                 <input
@@ -175,7 +175,7 @@ const ValidarInformacion = () => {
             <div className="flex flex-wrap -mx-3 m-8">
 
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" >
                   Saldo No Pensionados Cartera
                 </label>
                 <input
@@ -187,7 +187,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className="w-full md:w-1/3 px-3 ">
-                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" for="grid-zip">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2">
                   Tasa Usura %
                 </label>
                 <input
@@ -201,7 +201,7 @@ const ValidarInformacion = () => {
 
               </div>
               <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2" for="grid-state">
+                <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2" >
                   Tipo
                 </label>
                 <div className="relative">
@@ -219,7 +219,7 @@ const ValidarInformacion = () => {
             <div className="flex flex-wrap -mx-3 m-8">
 
               <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
-                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm mb-2" for="grid-city">
+                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm mb-2" >
                   Total Cartera Incorporada
                 </label>
                 <input
@@ -231,7 +231,7 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
               </div>
               <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
-                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm  mb-2" for="grid-zip">
+                <label className="block  tracking-wide text-gray-700 dark:text-white text-sm  mb-2" >
                   Total Cartera no Incorporada
                 </label>
                 <input

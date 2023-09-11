@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import TbodyCriterios from './TbodyCriterios';
 import Modal from '../../Modal/ModalListaNegra';
 import CriteriosContext from '../../../Context/CriteriosContext';
+import ModalArchivos from '../../Modal/ModalArchivos';
+import ModalListaNegra from '../../Modal/ModalListaNegra';
 
 // const lista = [
 //     {
@@ -175,6 +177,14 @@ import CriteriosContext from '../../../Context/CriteriosContext';
 
 
 const TableCriterios = ({ lista }) => {
+    const {showModalBlackList,setshowModalBlackList}=useContext(CriteriosContext)
+    const [modalDownFiles, setModalDownFiles] = useState(false)
+    const [datos, setDatos] = useState(null)
+    const descargarArchivos = (libranza) => {
+        setDatos(libranza)
+        setModalDownFiles(true)
+    }
+
     return (
         <>
             {lista &&
@@ -218,7 +228,7 @@ const TableCriterios = ({ lista }) => {
                                     <th className="px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-primary-500" scope="“col”">Archivos</th>
                                 </tr>
                             </thead>
-                            <TbodyCriterios lista={lista} />
+                            <TbodyCriterios lista={lista} downFiles={descargarArchivos} />
                         </table>
 
 
@@ -231,6 +241,8 @@ const TableCriterios = ({ lista }) => {
                 </div>
 
             }
+            {modalDownFiles&&<ModalArchivos libranza={datos} setShowModal={setModalDownFiles} show={modalDownFiles} />}
+            {showModalBlackList&&<ModalListaNegra />} 
         </>
 
     )

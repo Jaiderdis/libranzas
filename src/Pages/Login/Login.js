@@ -8,7 +8,7 @@ import { loginUser } from '../../Services/LoginService';
 import '../Login/Login.modules.css';
 import logoCompleto from '../img/logo-completo.png'
 
-import {BsFillArrowRightCircleFill} from  "react-icons/bs";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
 
 
@@ -37,12 +37,12 @@ const Login = () => {
       } else {
         if (!response?.data) {
           setErrMsg('Error interno');
-        } else if (response?.data?.result?.code===1) {
-          
+        } else if (response?.data?.result?.code === 1) {
+
           setErrMsg("Usuario Invalido");
-        } else if(response?.data?.result?.code===2){
+        } else if (response?.data?.result?.code === 2) {
           setErrMsg('Contraseña Incorrecta');
-        }else {
+        } else {
           setErrMsg('Error Interno')
         }
       }
@@ -57,8 +57,8 @@ const Login = () => {
 
 
   return (
-      <div className="fondo bg-center bg-no-repeat bg-fixed bg-cover" >
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+    <div className="fondo bg-center bg-no-repeat bg-fixed bg-cover" >
+      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
       <section className="min-h-screen flex justify-center items-center Laptop:flex-col">
         <div className="flex flex-col items-center">
           <picture className="flex justify-center">
@@ -67,7 +67,7 @@ const Login = () => {
           <div className="flex justify-center">
             <div className="flex flex-col">
               <p className="text-6xl font-bold text-center text-color-bienvenido my-6  LaptopL:text-6xl  MobileL:text-5xl MobileM:text-4xl MobileS:text-2xl" >¡Bienvenidos!</p>
-             
+
             </div>
           </div>
         </div>
@@ -78,29 +78,29 @@ const Login = () => {
           </div>
           <form action="#" method="POST" onSubmit={handleSubmit} className="flex flex-col items-center">
             <label htmlFor="mail"></label>
-            <input  id="documento"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setDocumento(e.target.value)}
-                    value={documento}
-                    required  
-                    type='number'
-                    placeholder="Documento" 
-                    className="input mb-4 rounded-lg p-3 mt-5 MobileS:w-36  MobileS:p-2" />
+            <input id="documento"
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setDocumento(e.target.value)}
+              value={documento}
+              required
+              type='number'
+              placeholder="Documento"
+              className="input mb-4 rounded-lg p-3 mt-5 MobileS:w-36  MobileS:p-2" />
             <label htmlFor="password"></label>
-            <input  id="password"
-                    name="password"
-                    type="password"
-                    onChange={(event) => setPassword(event.target.value)}
-                    autoComplete="current-password"
-                    required
-                    placeholder="Contraseña"
-                    className="input mb-4 rounded-lg p-3 mt-5 MobileS:w-36 MobileS:p-2" />
-            <button class="bg-secondary-500 hover:bg-secondary-600  hover:-translate-y-1 text-white font-bold py-4 px-4 my-3  rounded-full flex items-center gap-1">
+            <input id="password"
+              name="password"
+              type="password"
+              onChange={(event) => setPassword(event.target.value)}
+              autoComplete="current-password"
+              required
+              placeholder="Contraseña"
+              className="input mb-4 rounded-lg p-3 mt-5 MobileS:w-36 MobileS:p-2" />
+            <button className="bg-secondary-500 hover:bg-secondary-600  hover:-translate-y-1 text-white font-bold py-4 px-4 my-3  rounded-full flex items-center gap-1">
 
               <span>Ingresar</span>
-              <BsFillArrowRightCircleFill/>
-          </button>
+              <BsFillArrowRightCircleFill />
+            </button>
             <div className="flex justify-center">
               <a className="text-white text-sm mt-4 hover:text-gray-300" href="">¿Olvidó su contraseña?</a>
             </div>
