@@ -4,180 +4,13 @@ import Modal from '../../Modal/ModalListaNegra';
 import CriteriosContext from '../../../Context/CriteriosContext';
 import ModalArchivos from '../../Modal/ModalArchivos';
 import ModalListaNegra from '../../Modal/ModalListaNegra';
-
-// const lista = [
-//     {
-//         "libranza": "772022114734",
-//         "criterio1": "CUMPLE",
-//         "criterio2": "CUMPLE",
-//         "criterio3": "CUMPLE",
-//         "criterio4": "CUMPLE",
-//         "criterio5": "CUMPLE",
-//         "criterio6": "CUMPLE",
-//         "criterio7": "CUMPLE",
-//         "criterio8": "CUMPLE",
-//         "criterio9": "CUMPLE",
-//         "criterio10": "CUMPLE",
-//         "criterio11": "CUMPLE",
-//         "criterio12": "CUMPLE",
-//         "criterio13": "CUMPLE",
-//         "criterio14": "CUMPLE",
-//         "criterio15": "CUMPLE",
-//         "criterio16": "CUMPLE",
-//         "criterio17": "CUMPLE",
-//         "criterio18": "CUMPLE",
-//         "criterio19": "CUMPLE",
-//         "criterio20": "CUMPLE",
-//         "criterio21": "NO CUMPLE",
-//         "criterio22": "NO CUMPLE",
-//         "criterio23": "NO CUMPLE",
-//         "criterio24": "NO CUMPLE",
-//         "criterio25": "REVISAR",
-//         "criterio26": "CUMPLE",
-//         "criterio27": "CUMPLE",
-//         "criterio28": "CUMPLE",
-//         "criterio29": "CUMPLE",
-//         "criterio30": "CUMPLE"
-//     },
-//     {
-//         "libranza": "772022114736",
-//         "criterio1": "CUMPLE",
-//         "criterio2": "CUMPLE",
-//         "criterio3": "CUMPLE",
-//         "criterio4": "CUMPLE",
-//         "criterio5": "CUMPLE",
-//         "criterio6": "CUMPLE",
-//         "criterio7": "CUMPLE",
-//         "criterio8": "CUMPLE",
-//         "criterio9": "CUMPLE",
-//         "criterio10": "CUMPLE",
-//         "criterio11": "CUMPLE",
-//         "criterio12": "CUMPLE",
-//         "criterio13": "CUMPLE",
-//         "criterio14": "CUMPLE",
-//         "criterio15": "CUMPLE",
-//         "criterio16": "CUMPLE",
-//         "criterio17": "CUMPLE",
-//         "criterio18": "NO CUMPLE",
-//         "criterio19": "CUMPLE",
-//         "criterio20": "CUMPLE",
-//         "criterio21": "CUMPLE",
-//         "criterio22": "CUMPLE",
-//         "criterio23": "CUMPLE",
-//         "criterio24": "CUMPLE",
-//         "criterio25": "REVISAR",
-//         "criterio26": "CUMPLE",
-//         "criterio27": "NO CUMPLE",
-//         "criterio28": "CUMPLE",
-//         "criterio29": "CUMPLE",
-//         "criterio30": "CUMPLE"
-//     },
-//     {
-//         "libranza": "772022114843",
-//         "criterio1": "CUMPLE",
-//         "criterio2": "CUMPLE",
-//         "criterio3": "CUMPLE",
-//         "criterio4": "CUMPLE",
-//         "criterio5": "CUMPLE",
-//         "criterio6": "CUMPLE",
-//         "criterio7": "CUMPLE",
-//         "criterio8": "CUMPLE",
-//         "criterio9": "CUMPLE",
-//         "criterio10": "CUMPLE",
-//         "criterio11": "CUMPLE",
-//         "criterio12": "CUMPLE",
-//         "criterio13": "CUMPLE",
-//         "criterio14": "CUMPLE",
-//         "criterio15": "CUMPLE",
-//         "criterio16": "CUMPLE",
-//         "criterio17": "CUMPLE",
-//         "criterio18": "NO CUMPLE",
-//         "criterio19": "CUMPLE",
-//         "criterio20": "CUMPLE",
-//         "criterio21": "NO CUMPLE",
-//         "criterio22": "NO CUMPLE",
-//         "criterio23": "NO CUMPLE",
-//         "criterio24": "NO CUMPLE",
-//         "criterio25": "REVISAR",
-//         "criterio26": "CUMPLE",
-//         "criterio27": "NO CUMPLE",
-//         "criterio28": "CUMPLE",
-//         "criterio29": "CUMPLE",
-//         "criterio30": "CUMPLE"
-//     },
-//     {
-//         "libranza": "772022115108",
-//         "criterio1": "CUMPLE",
-//         "criterio2": "CUMPLE",
-//         "criterio3": "CUMPLE",
-//         "criterio4": "CUMPLE",
-//         "criterio5": "CUMPLE",
-//         "criterio6": "CUMPLE",
-//         "criterio7": "CUMPLE",
-//         "criterio8": "CUMPLE",
-//         "criterio9": "CUMPLE",
-//         "criterio10": "CUMPLE",
-//         "criterio11": "CUMPLE",
-//         "criterio12": "CUMPLE",
-//         "criterio13": "CUMPLE",
-//         "criterio14": "CUMPLE",
-//         "criterio15": "CUMPLE",
-//         "criterio16": "CUMPLE",
-//         "criterio17": "CUMPLE",
-//         "criterio18": "NO CUMPLE",
-//         "criterio19": "CUMPLE",
-//         "criterio20": "CUMPLE",
-//         "criterio21": "CUMPLE",
-//         "criterio22": "CUMPLE",
-//         "criterio23": "CUMPLE",
-//         "criterio24": "CUMPLE",
-//         "criterio25": "REVISAR",
-//         "criterio26": "CUMPLE",
-//         "criterio27": "NO CUMPLE",
-//         "criterio28": "CUMPLE",
-//         "criterio29": "CUMPLE",
-//         "criterio30": "CUMPLE"
-//     },
-//     {
-//         "libranza": "772022115256",
-//         "criterio1": "CUMPLE",
-//         "criterio2": "CUMPLE",
-//         "criterio3": "CUMPLE",
-//         "criterio4": "CUMPLE",
-//         "criterio5": "CUMPLE",
-//         "criterio6": "CUMPLE",
-//         "criterio7": "CUMPLE",
-//         "criterio8": "CUMPLE",
-//         "criterio9": "CUMPLE",
-//         "criterio10": "CUMPLE",
-//         "criterio11": "CUMPLE",
-//         "criterio12": "CUMPLE",
-//         "criterio13": "CUMPLE",
-//         "criterio14": "CUMPLE",
-//         "criterio15": "CUMPLE",
-//         "criterio16": "CUMPLE",
-//         "criterio17": "CUMPLE",
-//         "criterio18": "CUMPLE",
-//         "criterio19": "CUMPLE",
-//         "criterio20": "CUMPLE",
-//         "criterio21": "CUMPLE",
-//         "criterio22": "CUMPLE",
-//         "criterio23": "CUMPLE",
-//         "criterio24": "CUMPLE",
-//         "criterio25": "REVISAR",
-//         "criterio26": "CUMPLE",
-//         "criterio27": "CUMPLE",
-//         "criterio28": "CUMPLE",
-//         "criterio29": "CUMPLE",
-//         "criterio30": "CUMPLE"
-//     }
-// ]
+import { Loading } from '../../Loading/Loading';
 
 
 
 
 const TableCriterios = ({ lista }) => {
-    const {showModalBlackList,setshowModalBlackList}=useContext(CriteriosContext)
+    const { showModalBlackList, IsLoadingListaNegra } = useContext(CriteriosContext)
     const [modalDownFiles, setModalDownFiles] = useState(false)
     const [datos, setDatos] = useState(null)
     const descargarArchivos = (libranza) => {
@@ -188,8 +21,28 @@ const TableCriterios = ({ lista }) => {
     return (
         <>
             {lista &&
-                <div className=' relative w-4/5'>
+                <div className=' relative w-4/5 '>
+                    <div className='flex justify-center w-full h-20 Tablet:h-32 MobileM:h-40 pb-3'>
+                        <div className='grid grid-cols-3 MobileL:grid-cols-1 gap-3 '>
+                            <div className='flex flex-col gap-2 justify-center items-center'>
+                                <div className='bg-emerald-500   h-1 w-1/2 rounded-lg'></div>
+                                <div className='dark:text-white  rounded-lg text-xs text-center'>CUMPLE</div>
+                            </div>
+                            <div className='flex flex-col gap-2 justify-center items-center'>
+                                <div className='bg-red-500  h-1 w-1/2 rounded-lg'></div>
+                                <div className='dark:text-white  rounded-lg text-xs text-center'>NO CUMPLE</div>
+                            </div>
+                            <div className='flex flex-col gap-2 justify-center items-center'>
+                                <div className='bg-sky-500  h-1 w-1/2 rounded-lg'></div>
+                                <div className='dark:text-white  rounded-lg text-xs text-center'>REVISAR</div>
+                            </div>
 
+
+                       
+                            
+
+                        </div>
+                    </div>
                     <div className="w-full overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="w-full text-sm text-left text-blue-100 dark:text-blue-100">
                             <thead className="text-xs text-white uppercase bg-primary-500 ">
@@ -241,8 +94,8 @@ const TableCriterios = ({ lista }) => {
                 </div>
 
             }
-            {modalDownFiles&&<ModalArchivos libranza={datos} setShowModal={setModalDownFiles} show={modalDownFiles} />}
-            {showModalBlackList&&<ModalListaNegra />} 
+            {modalDownFiles && <ModalArchivos libranza={datos} setShowModal={setModalDownFiles} show={modalDownFiles} />}
+            {IsLoadingListaNegra ? <Loading /> : <ModalListaNegra />}
         </>
 
     )

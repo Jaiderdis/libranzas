@@ -4,12 +4,23 @@ const CriteriosContext =createContext({})
 
 
 export const CriteriosProvider = ({ children }) => {
-
+    const [IsLoadingListaNegra, setIsLoadingListaNegra] = useState(false)
     const [showModalBlackList,setshowModalBlackList]=useState(false)
-    const [dataModalBlackList,setdataModalBlackList]=useState({
-        libranza:'',
-        criterio:''
-    })
+    const [lista, setLista] = useState()
+
+    const [dataBlackList, setDataBlackList] = useState({
+        criterio:null,
+        dataEncontrada: [],
+        dataEntidad:
+        {
+          nombre: null,
+          pais: null,
+          direccion: null,
+          nit: null,
+          estado: null,
+          revision: null
+        }
+      })
   
 
     return (
@@ -17,9 +28,12 @@ export const CriteriosProvider = ({ children }) => {
             {
             showModalBlackList,
             setshowModalBlackList,
-            dataModalBlackList,
-            setdataModalBlackList
-
+            dataBlackList, 
+            setDataBlackList,
+            IsLoadingListaNegra,
+            setIsLoadingListaNegra,
+            lista,
+            setLista
             }}>
 
             {children}

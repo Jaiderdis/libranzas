@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
 
 import '../TableListaNegra/TableListaNegra.modules.css'
 import { VscError } from 'react-icons/vsc';
 import { RiErrorWarningFill } from 'react-icons/ri';
 
-const TableListaNegra = ({ data }) => {
+const TableListaNegra = ({ data, handleCheckboxChange }) => {
+
+
   return (
     <div className=' relative   w-full'>
       <div className='m-5 flex justify-center flex-col items-center gap-3'>
@@ -45,20 +47,14 @@ const TableListaNegra = ({ data }) => {
           <tbody>
 
             {data.dataEncontrada.map((item, index) => (
-              <tr >
+              <tr key={item.id}>
                 <td className='p-5 border-2 '>
                   <div className='grid grid-cols-2 MobileL:grid-cols-1 gap-4 mx-3'>
-                    {/* <div >
-                      <label className='font-bold text-base'>Nombre:</label>
-                      <p>Colpenciones</p>
-                    </div>*/}
                     {Object.keys(item).map(dato => (
-                      <div >
+                      <div key={`${item.id}${dato}`}>
                         <label className='font-bold text-base uppercase'>{dato}:</label>
                         <p>{item[dato]}</p>
                       </div>
-
-
 
                     )
                     )}
@@ -67,13 +63,15 @@ const TableListaNegra = ({ data }) => {
                 </td>
                 <td className='border-2 '>
                   <div className='flex justify-center items-center'>
-                    <input type='checkbox' />
+                    <input
+                      type='checkbox'
+                      onChange={() => handleCheckboxChange(index)} // Manejador de cambio
+                    />
                   </div>
                 </td>
 
               </tr>
             ))}
-
 
 
           </tbody>

@@ -1,18 +1,20 @@
 
 import React, { useContext, useState } from 'react'
-import useAuth from '../../hooks/useAuth';
 
 // icons
 import { AiFillCaretDown } from "react-icons/ai";
 
 // Component
-import Modal from '../../Componentes/Modal/ModalListaNegra';
-
 import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios';
-import { revisarCriterios,CriteriosRevisados } from '../../Services/CriteriosService';
 import { Loading } from '../../Componentes/Loading/Loading';
+
+//Services
+import { revisarCriterios, CriteriosRevisados } from '../../Services/CriteriosService';
+
+//hooks
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CriteriosContext from '../../Context/CriteriosContext';
+
 
 
 const tipoIncoporacion = {
@@ -20,12 +22,9 @@ const tipoIncoporacion = {
   NoIncorporado: '2'
 }
 
-
 const ValidarInformacion = () => {
-
-
   const [isNoIncorporado, setIsNoIncorporado] = useState(false)
-
+const {lista,setLista}=useContext(CriteriosContext)
   const [valores, setValores] = useState({
     Valor_compra: '',
     Saldo_cartera: '',
@@ -36,9 +35,11 @@ const ValidarInformacion = () => {
     Cartera_no_incorporada: '',
     Tasa_interes: ''
   });
-  const [lista, setLista] = useState()
-  const [IsLoading, setIsLoading] = useState(false);
-  const axiosPrivate = useAxiosPrivate();
+
+
+  const [IsLoading, setIsLoading] = useState(false)
+
+  const axiosPrivate = useAxiosPrivate()
 
   const handleClickTipo = (e) => {
 
@@ -67,15 +68,13 @@ const ValidarInformacion = () => {
 
 
   }
-
-
   const handleInputChange = (event) => {
     const value = event.target.value;
     const name = event.target.id;
 
-    
-    let  numericInput = value.replace(/[^0-9]/g, '');
-    if (name === 'Tasa_interes' &&value!=='') {
+
+    let numericInput = value.replace(/[^0-9]/g, '');
+    if (name === 'Tasa_interes' && value !== '') {
       numericInput = Math.min(parseInt(numericInput, 10), 100).toString();
     }
 
@@ -89,41 +88,30 @@ const ValidarInformacion = () => {
 
 
   }
-
   const handleSubmitRevisar = async (e) => {
     e.preventDefault();
     try {
-
       setIsLoading(true);
-
       const response = await revisarCriterios(axiosPrivate, valores);
-      setLista(response.data!=[]?response.data:null)
-
+      setLista(response ? response.data : undefined)
     } catch (error) {
 
     } finally {
       setIsLoading(false)
     }
-
   }
   const handleSubmitRevisados = async (e) => {
     e.preventDefault();
     try {
-
       setIsLoading(true);
-
-
       const response = await CriteriosRevisados(axiosPrivate);
-      setLista(response.data!=[]?response.data:null)
-
+      setLista(response.data != [] ? response.data : null)
     } catch (error) {
 
     } finally {
       setIsLoading(false)
     }
-
   }
-
 
   return (
 
@@ -131,9 +119,9 @@ const ValidarInformacion = () => {
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
 
         <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800">
-          <div className="w-full max-w-3xl">
-            <div className="flex flex-wrap -mx-3 m-4">
-              <div className="w-full md:w-1/3 px-3">
+          <form method='post' onSubmit={handleSubmitRevisar} className="w-full max-w-3xl">
+            <div className="grid grid-cols-3 Tablet:grid-cols-1 Laptop:grid-cols-2 gap-4 mx-3 m-4">
+              <div className="w-full  px-3 ">
                 <label className="block tracking-wide text-gray-700 text-sm dark:text-white mb-2">
                   Valor Compra
                 </label>
@@ -143,9 +131,10 @@ const ValidarInformacion = () => {
                   value={valores.Valor_compra}
                   onChange={handleInputChange}
                   required
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="$" />
               </div>
-              <div className="w-full md:w-1/3 px-3">
+              <div className="w-full px-3">
                 <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" >
                   Saldo Cartera
                 </label>
@@ -155,11 +144,12 @@ const ValidarInformacion = () => {
                   value={valores.Saldo_cartera}
                   onChange={handleInputChange}
                   required
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="$" />
               </div>
-              <div className="w-full md:w-1/3 px-3 ">
+              <div className="w-full px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2" >
-                  Saldo Pensionados Cartera
+                  Pensionados
                 </label>
                 <input
                   id='Saldo_pensionados'
@@ -167,16 +157,15 @@ const ValidarInformacion = () => {
                   value={valores.Saldo_pensionados}
                   onChange={handleInputChange}
                   required
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
-              
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="Saldo Cartera" />
+
 
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 m-8">
 
-              <div className="w-full md:w-1/3 px-3 ">
+              <div className="w-full  px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" >
-                  Saldo No Pensionados Cartera
+                  No Pensionados
                 </label>
                 <input
                   id='Saldo_no_pensionados'
@@ -184,9 +173,10 @@ const ValidarInformacion = () => {
                   value={valores.Saldo_no_pensionados}
                   onChange={handleInputChange}
                   required
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="Saldo Cartera" />
               </div>
-              <div className="w-full md:w-1/3 px-3 ">
+              <div className="w-full px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm dark:text-white mb-2">
                   Tasa Usura %
                 </label>
@@ -195,12 +185,13 @@ const ValidarInformacion = () => {
                   type="text"
                   value={valores.Tasa_interes}
                   onChange={handleInputChange}
-                  required
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  required={true}
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="%" />
 
 
               </div>
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <div className="w-full  px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2" >
                   Tipo
                 </label>
@@ -215,12 +206,9 @@ const ValidarInformacion = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 m-8">
-
-              <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
+              <div className={`w-full px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
                 <label className="block  tracking-wide text-gray-700 dark:text-white text-sm mb-2" >
-                  Total Cartera Incorporada
+                  Total Incorporada
                 </label>
                 <input
                   id='Cartera_incorporada'
@@ -228,11 +216,12 @@ const ValidarInformacion = () => {
                   value={valores.Cartera_incorporada}
                   onChange={handleInputChange}
                   required={isNoIncorporado}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="Total Cartera" />
               </div>
-              <div className={`w-full md:w-1/3 px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
+              <div className={`w-full  px-3 ${(!isNoIncorporado ? 'hidden' : '')}`}>
                 <label className="block  tracking-wide text-gray-700 dark:text-white text-sm  mb-2" >
-                  Total Cartera no Incorporada
+                  Total No Incorporada
                 </label>
                 <input
                   id='Cartera_no_incorporada'
@@ -240,34 +229,30 @@ const ValidarInformacion = () => {
                   value={valores.Cartera_no_incorporada}
                   onChange={handleInputChange}
                   required={isNoIncorporado}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700" placeholder="$" />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+                  placeholder="Total Cartera" />
               </div>
+
             </div>
             <div className="flex flex-wrap m-8 justify-center gap-6">
-              <button onClick={handleSubmitRevisar} className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
+              <button type='submit' className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
 
               <button onClick={handleSubmitRevisados} type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">Criterios Revisados</button>
             </div>
-          </div>
+            </form>
+        
           {/* tabla */}
 
-          {IsLoading ? <Loading /> :lista&& <TableCriterios lista={lista} />}
+          {IsLoading ? <Loading /> : lista && <TableCriterios lista={lista} />}
 
           {/* tabla */}
 
 
 
-         
+
 
         </div>
       </div>
-
-
- 
-
-
-
-
     </>
   )
 }

@@ -4,6 +4,8 @@ import CriteriosContext from '../../../Context/CriteriosContext';
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
 import { VscError } from 'react-icons/vsc';
 import { RiErrorWarningFill } from 'react-icons/ri';
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
+import { consultarInfoCriterio } from '../../../Services/CriteriosService';
 const resCriterio = {
 
     CUMPLE: {
@@ -26,10 +28,10 @@ const criteriosBlackList = ['criterio27', 'criterio25']
 
 
 
-const Td = ({ item,key, criterio }) => {
+const Td = ({ item, criterio }) => {
 
-    const {setshowModalBlackList,dataModalBlackList,setdataModalBlackList}=useContext(CriteriosContext)
-
+    const { setIsLoadingListaNegra, setshowModalBlackList, setDataBlackList } = useContext(CriteriosContext)
+    const axiosPrivate = useAxiosPrivate();
     const obtenerEstilos = (item, criterio) => {
 
         if (resCriterio.CUMPLE.Resultado === item[criterio]) {
@@ -47,17 +49,34 @@ const Td = ({ item,key, criterio }) => {
 
     }
 
-    const toggleModalListaNegra=()=>{
-    //     const clickedItem = item; // Acceder a item aquí si es necesario
-    // const clickedCriterio = criterio; 
-    const numcriterio=criterio.slice(8)
-        setdataModalBlackList({...dataModalBlackList,libranza:item.libranza,criterio:numcriterio})
-        setshowModalBlackList(true)
+    const handleSubmitListaNegra = async (e) => {
+        e.preventDefault();
+        const numcriterio = criterio.slice(8)
+        const libranza = item.libranza
+        try {
+
+            setIsLoadingListaNegra(true)
+
+
+            const response = await consultarInfoCriterio(axiosPrivate, libranza, numcriterio);
+            const dataEncontrada = response.data.item1;
+            const dataEntidad = response.data.item2;
+            setDataBlackList({criterio:numcriterio, dataEncontrada: dataEncontrada, dataEntidad: dataEntidad, libranza: libranza })
+
+        } catch (error) {
+
+        } finally {
+
+            setIsLoadingListaNegra(false)
+            setshowModalBlackList(true)
+        }
+
     }
+
 
     if (item[criterio] === 'CUMPLE') {
         return (
-            <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
+            <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border`}
                 key={criterio}>
                 <span className='flex justify-center'><FaCircleCheck size={25} /></span>
 
@@ -65,7 +84,7 @@ const Td = ({ item,key, criterio }) => {
         )
     } else if (item[criterio] === 'NO CUMPLE') {
         return (
-            <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
+            <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border`}
                 key={criterio}>
                 <span className='flex justify-center'><FaCircleXmark size={27} /></span>
 
@@ -74,15 +93,15 @@ const Td = ({ item,key, criterio }) => {
     } else {
         return (
             <>
-                {criteriosBlackList.includes(criterio)?
-                    <td onClick={toggleModalListaNegra} className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
+                {criteriosBlackList.includes(criterio) ?
+                    <td onClick={handleSubmitListaNegra} className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
                         key={criterio}>
                         <span className='flex justify-center'><RiErrorWarningFill size={29} /></span>
-                    </td>:
-                    <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-cyan-700`}
-                    key={criterio}>
-                    <span className='flex justify-center'><RiErrorWarningFill size={29} /></span>
-                </td>
+                    </td> :
+                    <td className={`${obtenerEstilos(item, criterio)} px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border`}
+                        key={criterio}>
+                        <span className='flex justify-center'><RiErrorWarningFill size={29} /></span>
+                    </td>
 
                 }
             </>

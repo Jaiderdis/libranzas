@@ -24,7 +24,7 @@ const TbodyCriterios = ({ lista, downFiles }) => {
 
             <tbody >
                 {
-
+lista&&
                     lista.map((item, index) => (
                         <tr className="bg-cyan-600 border-b border-white" key={index}>
 
