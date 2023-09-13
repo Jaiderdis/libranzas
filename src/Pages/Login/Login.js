@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Loading } from '../../Componentes/Loading/Loading';
 import { loginUser } from '../../Services/LoginService';
 import '../Login/Login.modules.css';
-import logoCompleto from '../img/logo-completo.png'
+import logoCompleto from '../img/Logo_Exponencial_GI-sinfondo color.png'
 
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
