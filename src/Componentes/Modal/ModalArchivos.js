@@ -39,14 +39,16 @@ export default function ModalArchivos({ libranza, setShowModal, show }) {
     );
   }
   const handleDescargarArchivo = async () => {
-
-
     try {
       const tipoFile = selectedArchivo.tipo
 
       const response = await descargarArchivo(axios, libranza, tipoFile);
       if (response == null) {
         alert('Error interno')
+      }
+
+      if(!response.data.carga){
+        throw new Error('No tiene pdf cargado')
       }
       let downloadLink = document.createElement("a");
       const fileName = `${libranza}_${response.data.cedula}_${selectedArchivo.label}` + ".pdf";

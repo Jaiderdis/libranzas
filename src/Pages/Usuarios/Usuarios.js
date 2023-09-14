@@ -35,34 +35,13 @@ const Usuarios = () => {
   const [abortController, setAbortController] = useState(null);
 
 
-  // useEffect(() => {
-  //   const controller = new AbortController();
-  //   const signal = controller.signal;
-
-  //   const getUsers = async () => {
-  //     try {
-  //       const response = await axiosPrivate.get('/Archivos/prueba', { signal });
-  //       setUsers(response.data);
-  //     } catch (err) {
-  //       // Handle error, e.g., redirect to login
-  //       console.log('Error fetching users:'+err);
-  //     }
-  //   };
-
-  //   getUsers();
-
-  //   return () => {
-  //     controller.abort();
-  //   };
-  // }, []);
-
-
   const handleSubmit= async ()=>{
 
     const controller = new AbortController();
     setAbortController(controller);
     try {
       const response = await axiosPrivate.get('/Archivos/prueba', { signal:controller.signal })
+      setUsers(response.data)
       console.log('Respuesta de la API:', response.data);
 
     } catch (error) {
@@ -78,7 +57,7 @@ const Usuarios = () => {
     <>
     <button onClick={handleSubmit}>consumir</button>
       <article>
-           
+           {users&&users.map(x=>(<h1>{x}</h1>))}
         </article>
       
 

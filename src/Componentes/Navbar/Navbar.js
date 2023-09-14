@@ -1,8 +1,8 @@
 
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import profilePic from '../Images/user-default.png'
-import loader from '../Images/loader-ex.png'
+import profilePic from '../../Img/user-default.png'
+import logo from '../../Img/Logo_Exponencial_GI-sinfondo color.png'
 import useAuth from '../../hooks/useAuth';
 import '../Navbar/Navbar.modules.css'
 import { HiHome, HiOutlineUpload } from 'react-icons/hi';
@@ -71,7 +71,7 @@ const links = [
 
 
 const Navbar = () => {
-    const { outLogin, user, rol,toggleModeDark} = useAuth();
+    const { outLogin, user, rol, toggleModeDark } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     let SideBarRef = useRef();
@@ -80,16 +80,9 @@ const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isPerfilOpen, setIsPerfilOpen] = useState(false);
     // si es true es claro y si es false es oscuro
-   
+
 
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
-
-  
-
-   
-
-
-
     useEffect(() => {
         let handler = (e) => {
             if (!e.composedPath().includes(PerfilRef.current)) {
@@ -119,7 +112,7 @@ const Navbar = () => {
 
         <>
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-darkPrimary-500 dark:border-gray-700">
-                <div className="px-3 py-3 lg:px-5 lg:pl-3">
+                <div className="px-3 py-3  lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start">
                             <button ref={btnSideBarRef} id='btnsidebar' onClick={() => setSidebarOpen(!sidebarOpen)} data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -129,7 +122,7 @@ const Navbar = () => {
                                 </svg>
                             </button>
                             <a href="/" className="flex ml-2 md:mr-24">
-                                <img src={loader} className="h-8 mr-3" alt="Exponencial Logo" />
+                                <img src={logo} className="h-12 w-40 mr-3" alt="Exponencial Logo" />
                                 {/* <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Exponencial</span> */}
                             </a>
                         </div>
@@ -137,7 +130,7 @@ const Navbar = () => {
                             <div ref={PerfilRef} className="flex items-center ml-3 gap-3">
                                 <div>
                                     <button type="button" className={"flex text-sm bg-gray-800 rounded-full "} onClick={toggleModeDark} aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                        <MdLightMode size={20} className='dark:text-white  dark:bg-gray-800 text-black bg-white'/>
+                                        <MdLightMode size={20} className='dark:text-white  dark:bg-gray-800 text-black bg-white' />
                                     </button>
                                 </div>
 
@@ -169,10 +162,10 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            <aside ref={SideBarRef} id="logo-sidebar" className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0  bg-white border-r border-gray-200 dark:bg-darkPrimary-500 dark:border-0`} aria-label="Sidebar">
+            <aside ref={SideBarRef} id="logo-sidebar" className={`flex flex-col fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0  bg-white border-r border-gray-200 dark:bg-darkPrimary-500 dark:border-0`} aria-label="Sidebar">
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-darkPrimary-500">
-                    <div className="flex flex-row py-3">
-                        <img src={profilePic} className="h-16 w-16 mr-3" />
+                    <div className="flex flex-row py-2">
+                        <img src={profilePic} className="h-14 w-16 mr-3" />
                         <div>
                             <h1 className='text-gray-900 dark:text-white'>Hola, <br /> <strong>{user}</strong></h1>
                         </div>
@@ -185,7 +178,7 @@ const Navbar = () => {
                     <ul className="space-y-2 font-medium">
                         {filteredLinks.map(({ label, route, icon }) =>
                             <li key={label}>
-                                <a href={route} className={`${(route===location.pathname?'bg-primary-500 dark:bg-gray-500 dark:hover:bg-gray-700 text-white hover:bg-secondary-600':'hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700')} flex items-center p-2 text-gray-900 rounded-lg  transition  ease-in-out delay-50  hover:-translate-y-1  dark:hover:text-white group`}>
+                                <a href={route} className={`${(route === location.pathname ? 'bg-primary-500 dark:bg-gray-500 dark:hover:bg-gray-700 text-white hover:bg-secondary-600' : 'hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700')} flex items-center p-2 text-gray-900 rounded-lg  transition  ease-in-out delay-50  hover:-translate-y-1  dark:hover:text-white group`}>
                                     {icon}
                                     <span className="ml-3">{label}</span>
 
@@ -194,7 +187,20 @@ const Navbar = () => {
                             </li>
                         )}
                     </ul>
+
                 </div>
+                <hr />
+                <footer>
+                    <div className=" text-center py-2 text-black dark:text-white">
+
+                        <p>
+                            © All Copyright 2023
+                            <br />
+                            por <strong><a href="https://www.1cero1.com/" target="_blank">101 S.A.S</a></strong>
+                        </p>
+
+                    </div>
+                </footer>
             </aside>
 
 

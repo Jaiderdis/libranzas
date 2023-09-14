@@ -3,27 +3,42 @@
 @tailwind utilities;
 
 
-.fondo{
-    background-image: url('../img/LOGIN_EXPONENCIAL.jpg');
-    font-family: 'Montserrat', sans-serif;
-    
+.fondo {
+  background-image: url('../../Img/LOGIN_EXPONENCIAL.jpg');
+  font-family: 'Montserrat', sans-serif;
+
 }
 
 
 
 
-.fSizeTitle{
-    font-size: 2.7rem;
+.fSizeTitle {
+  font-size: 2.7rem;
 }
 
 
-.bg-form-login{
-    background-color: #00364fc6;
-    
-  }
+.bg-form-login {
+  background-color: #00364fc6;
+
+}
 
 
-  .text-color-bienvenido{
-    
-    color: #00496c;
-  }
+.text-color-bienvenido {
+
+  color: #00496c;
+}
+
+.error{
+  background-color: #ef444470;
+}
+
+.error-msg {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.error-msg.show {
+  opacity: 1;
+  transform: translateY(0);
+}
