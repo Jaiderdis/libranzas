@@ -58,7 +58,7 @@ const links = [
         label: 'Usuarios',
         route: '/Usuarios',
         icon: <FaUsers size={20} />,
-        roles: ['1']
+        roles: ['1','2']
     },
     {
         label: 'Configuración',
@@ -165,7 +165,7 @@ const Navbar = () => {
             <aside ref={SideBarRef} id="logo-sidebar" className={`flex flex-col fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0  bg-white border-r border-gray-200 dark:bg-darkPrimary-500 dark:border-0`} aria-label="Sidebar">
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-darkPrimary-500">
                     <div className="flex flex-row py-2">
-                        <img src={profilePic} className="h-14 w-16 mr-3" />
+                        <img src={profilePic} className="h-12 w-12 mr-3" />
                         <div>
                             <h1 className='text-gray-900 dark:text-white'>Hola, <br /> <strong>{user}</strong></h1>
                         </div>

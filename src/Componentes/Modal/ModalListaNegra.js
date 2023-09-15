@@ -40,7 +40,7 @@ for (const key in valuesCheck) {
         const item = valuesCheck[key];
         const nuevoItem = {
             "Id": item.Id,
-            "Documento": item.Document, // Rellenar con ceros a la izquierda
+            "Documento": item.Document, 
             "Revision": item.Revision ? 1 : 0
         };
         listRevision.push(nuevoItem);

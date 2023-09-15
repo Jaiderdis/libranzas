@@ -1,4 +1,3 @@
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 
 const URl_Criterio = {

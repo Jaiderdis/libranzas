@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Loading } from '../../Componentes/Loading/Loading';
 import ModalInfo from '../../Componentes/Modal/ModalInfo';
+import { DescargarExcel } from '../../Services/ArchivosService';
 
 const URL_CargarFiles = {
   Excel: 'Archivos/CargarArchivo',
@@ -110,35 +111,37 @@ const CargarArchivos = () => {
   // Subir Archivo Excel
   const handleSubmitExcel = async () => {
     if (!selectedFileExcel) {
-      // alert('Por favor, selecciona un archivo antes de subirlo.');
-
       setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo antes de subirlo.' })
       setModalInfo(true)
       return;
     }
-
-    const controller = new AbortController();
-    // setAbortController(controller);
 
     try {
       setLoadingSaveFile(true)
       const formData = new FormData();
       formData.append('Archivo', selectedFileExcel);
 
-      const response = await axiosPrivate.post(URL_CargarFiles.Excel, formData, {
+      const response = await DescargarExcel(axiosPrivate, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
-      }, { signal: controller.signal })
+      })
 
-      if (!response?.data?.carga) {
-        throw new Error('Error')
+      if(response===null)
+      {
+        throw new Error('Error Interno')
       }
-      setDatosModalInfo({ title: 'Exito', Content: 'Se ha cargado el archivo correctamente' })
+      
+      setDatosModalInfo(
+        { 
+          title: response.data.success ? 'Exito' : 'Error',
+          Content:response.data.message
+        })
       setModalInfo(true)
+     
 
     } catch (error) {
-      console.log(error)
+
       setDatosModalInfo({ title: 'Error', Content: 'Error al cargar archivo excel' })
       setModalInfo(true)
     } finally {

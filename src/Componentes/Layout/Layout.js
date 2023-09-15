@@ -17,7 +17,7 @@ const Layout = () => {
             <footer  className="p-3 2xl:px-36 3xl:px-96 sm:ml-64 h-auto bg-primary-500 dark:bg-darkPrimary-500 border-l border-black flex Laptop:text-sm MobileL:flex-col gap-3 justify-center text-white items-center">
                 <span>Asesorado, diseñado, desarrollado y potenciado por </span>
                 <a href="https://www.1cero1.com/">
-                    <img className="w-40 h-10 " src={logo} />
+                    <img className="w-32 h-7 " src={logo} />
                 </a>
                 
             </footer>
