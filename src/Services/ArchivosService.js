@@ -12,4 +12,17 @@ export const DescargarExcel = async (axios, formData, headers) => {
       return null;
     }
   };
+
+  
+export const descargarArchivo = async (axios,tipoFile,libranza) => {
+  try {
+    const controller = new AbortController();
+    const response = await axios.get(`${URl_Archivo.buscarPdf}?libranza=${tipoFile}&ID=${libranza}`, { signal: controller.signal })
+    return response;
+  } catch (error) {
+    console.error("Error al obtener los criterios:", error);
+    return null;
+  }
+};
+
   

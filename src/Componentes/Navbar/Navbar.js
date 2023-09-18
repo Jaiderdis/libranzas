@@ -1,73 +1,21 @@
-
-
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+//----Images----
 import profilePic from '../../Img/user-default.png'
 import logo from '../../Img/Logo_Exponencial_GI-sinfondo color.png'
+//----Images----
+//----Hooks----
 import useAuth from '../../hooks/useAuth';
+import {useLocation, useNavigate } from 'react-router-dom';
+//----Hooks----
+//----styles----
 import '../Navbar/Navbar.modules.css'
-import { HiHome, HiOutlineUpload } from 'react-icons/hi';
-import { SiCodereview } from 'react-icons/si';
-import { FaHandshakeSimple } from 'react-icons/fa6';
-import { FaUsers } from 'react-icons/fa';
-import { IoStatsChart } from 'react-icons/io5';
-import { BiSolidReport } from 'react-icons/bi';
-import { AiFillSetting } from 'react-icons/ai';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-
+//----styles----
+//----Icons----
 import { MdLightMode } from 'react-icons/md';
-
-
-const links = [
-    {
-        label: 'Inicio',
-        route: '/',
-        icon: <HiHome size={20} />,
-        roles: ['1', '2', '3']
-    },
-    {
-        label: 'Cargar Archivos',
-        route: '/CargarArchivos',
-        icon: <HiOutlineUpload size={20} />,
-        roles: ['1', '3']
-    },
-    {
-        label: 'Revisar Criterios',
-        route: '/ValidarInformacion',
-        icon: <SiCodereview size={20} />,
-        roles: ['1', '2']
-    },
-    {
-        label: 'Conciliación',
-        route: '/Login',
-        icon: <FaHandshakeSimple size={20} />,
-        roles: ['1', '2']
-    },
-    {
-        label: 'Estadisticas',
-        route: '/Login',
-        icon: <IoStatsChart size={20} />,
-        roles: ['1', '2']
-    },
-    {
-        label: 'Informes',
-        route: '/Login',
-        icon: <BiSolidReport size={20} />,
-        roles: ['1', '2']
-    },
-    {
-        label: 'Usuarios',
-        route: '/Usuarios',
-        icon: <FaUsers size={20} />,
-        roles: ['1','2']
-    },
-    {
-        label: 'Configuración',
-        route: '/Login',
-        icon: <AiFillSetting size={20} />,
-        roles: ['1', '2']
-    }
-]
-
+//----Icons----
+//----Utils----
+import { links } from '../../utils/Links';
+//----Utils----
 
 
 const Navbar = () => {
@@ -79,9 +27,6 @@ const Navbar = () => {
     let PerfilRef = useRef();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isPerfilOpen, setIsPerfilOpen] = useState(false);
-    // si es true es claro y si es false es oscuro
-
-
     const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
     useEffect(() => {
         let handler = (e) => {
@@ -108,8 +53,8 @@ const Navbar = () => {
         outLogin()
         navigate('/login')
     }
-    return (
 
+    return (
         <>
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-darkPrimary-500 dark:border-gray-700">
                 <div className="px-3 py-3  lg:px-5 lg:pl-3">

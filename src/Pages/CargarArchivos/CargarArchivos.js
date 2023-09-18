@@ -19,8 +19,6 @@ const CargarArchivos = () => {
   const [draggedExcelOver, setDraggedExcelOver] = useState(false);
   const [draggedDocumentOver, setDraggedDocumentOver] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-  // const [abortController, setAbortController] = useState(null);
-
 
 
   // Adjuntar Excel
@@ -29,12 +27,9 @@ const CargarArchivos = () => {
     const file = event.target.files[0];
 
     if (file) {
-      // Realizar la validación aquí
       if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-        // El archivo es un XLSX válido
         setSelectedFileExcel(file)
       } else {
-        // El archivo no es un XLSX válido
         setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .xlsx válido.' })
         setModalInfo(true)
       }
@@ -64,19 +59,16 @@ const CargarArchivos = () => {
     }
 
   };
+    // Adjuntar Excel
 
 
   // Adjuntar Documentos
   const handleDocumentChange = (event) => {
     const file = event.target.files[0];
-
     if (file) {
-      // Realizar la validación aquí
       if (file.type === 'application/x-rar-compressed' || file.name.endsWith('.rar')) {
-        // El archivo es un XLSX válido
         setSelectedFileDocument(file)
       } else {
-        // El archivo no es un XLSX válido
         setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .rar o .zip válido.' })
         setModalInfo(true)
       }
@@ -87,7 +79,6 @@ const CargarArchivos = () => {
     e.stopPropagation();
     setDraggedDocumentOver(true);
   };
-
   const handleDragLeaveDocument = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -105,8 +96,7 @@ const CargarArchivos = () => {
       setModalInfo(true)
     }
   };
-
-
+  // Adjuntar Documentos
 
   // Subir Archivo Excel
   const handleSubmitExcel = async () => {
@@ -141,7 +131,6 @@ const CargarArchivos = () => {
      
 
     } catch (error) {
-
       setDatosModalInfo({ title: 'Error', Content: 'Error al cargar archivo excel' })
       setModalInfo(true)
     } finally {
@@ -157,10 +146,7 @@ const CargarArchivos = () => {
       setModalInfo(true)
       return;
     }
-
     const controller = new AbortController();
-    // setAbortController(controller);
-
     try {
       setLoadingSaveFile(true)
       const formData = new FormData();

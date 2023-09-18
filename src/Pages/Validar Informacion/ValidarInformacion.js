@@ -1,30 +1,26 @@
 
 import React, { useContext, useState } from 'react'
-
+//CustomHooks
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 // icons
 import { AiFillCaretDown } from "react-icons/ai";
-
 // Component
 import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios';
 import { Loading } from '../../Componentes/Loading/Loading';
-
+import  ModalConfirmacion  from '../../Componentes/Modal/ModalConfirmacion';
 //Services
 import { revisarCriterios, CriteriosRevisados } from '../../Services/CriteriosService';
-
-//hooks
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+//Context
 import CriteriosContext from '../../Context/CriteriosContext';
+import { tipoIncoporacion } from '../../utils/Criterio';
 
 
 
-const tipoIncoporacion = {
-  Incorporado: '1',
-  NoIncorporado: '2'
-}
+
 
 const ValidarInformacion = () => {
+  const { lista, setLista } = useContext(CriteriosContext)
   const [isNoIncorporado, setIsNoIncorporado] = useState(false)
-const {lista,setLista}=useContext(CriteriosContext)
   const [valores, setValores] = useState({
     Valor_compra: '',
     Saldo_cartera: '',
@@ -35,9 +31,8 @@ const {lista,setLista}=useContext(CriteriosContext)
     Cartera_no_incorporada: '',
     Tasa_interes: ''
   });
-
-
   const [IsLoading, setIsLoading] = useState(false)
+  const [showModalConfirmacion, setshowModalConfirmacion] = useState(true)
 
   const axiosPrivate = useAxiosPrivate()
 
@@ -111,6 +106,9 @@ const {lista,setLista}=useContext(CriteriosContext)
     } finally {
       setIsLoading(false)
     }
+  }
+  const ComprarLibranzas =()=>{
+
   }
 
   return (
@@ -239,20 +237,24 @@ const {lista,setLista}=useContext(CriteriosContext)
 
               <button onClick={handleSubmitRevisados} type="button" className="focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">Criterios Revisados</button>
             </div>
-            </form>
-        
+          </form>
+
           {/* tabla */}
 
           {IsLoading ? <Loading /> : lista && <TableCriterios lista={lista} />}
 
           {/* tabla */}
-
+          <div className="flex flex-wrap m-8 justify-center gap-6">
+            <button type="button" className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800" onClick={ComprarLibranzas}>Comprar Libranzas</button>
+          </div>
 
 
 
 
         </div>
       </div>
+
+      {showModalConfirmacion&&<ModalConfirmacion contenido={"hola"}/>}
     </>
   )
 }
