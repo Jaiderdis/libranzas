@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Loading } from '../../Componentes/Loading/Loading';
 import ModalInfo from '../../Componentes/Modal/ModalInfo';
-import { DescargarExcel } from '../../Services/ArchivosService';
+import { CargarExcel ,CargarPDFs} from '../../Services/ArchivosService';
 
-const URL_CargarFiles = {
-  Excel: 'Archivos/CargarArchivo',
-  PDFs: 'Archivos/CargarPDF'
-}
+
 
 
 const CargarArchivos = () => {
@@ -111,7 +108,7 @@ const CargarArchivos = () => {
       const formData = new FormData();
       formData.append('Archivo', selectedFileExcel);
 
-      const response = await DescargarExcel(axiosPrivate, formData, {
+      const response = await CargarExcel(axiosPrivate, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
@@ -146,28 +143,37 @@ const CargarArchivos = () => {
       setModalInfo(true)
       return;
     }
-    const controller = new AbortController();
     try {
       setLoadingSaveFile(true)
       const formData = new FormData();
       formData.append('Archivo', selectedFileDocument);
 
-      const response = await axiosPrivate.post(URL_CargarFiles.PDFs, formData, {
+      const response = await CargarPDFs(axiosPrivate, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
-      }, { signal: controller.signal })
-      if (!response?.data?.carga) {
-        throw new Error('Error')
+      })
+
+      if(response===null)
+      {
+        throw new Error('Error Interno')
       }
-      setDatosModalInfo({ title: 'Exito', Content: 'Se ha cargado el archivo correctamente' })
+      
+      setDatosModalInfo(
+        { 
+          title: response.data.success ? 'Exito' : 'Error',
+          Content:response.data.message
+        })
       setModalInfo(true)
+     
+
     } catch (error) {
-      setDatosModalInfo({ title: 'Error', Content: 'Error al cargar archivo excel' })
+      setDatosModalInfo({ title: 'Error', Content: 'Error al cargar los pdfs' })
       setModalInfo(true)
     } finally {
       setLoadingSaveFile(false)
     }
+    
 
   }
 

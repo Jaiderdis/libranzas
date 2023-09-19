@@ -1,17 +1,28 @@
 const URl_Archivo = {
     buscarPdf:'Archivos/buscarPDF',
-    DescargarExcel:'Archivos/CargarExcel'
+    CargarExcel:'Archivos/CargarExcel',
+    CargarPDFs:'Archivos/CargarPDFs'
   };
   
 
-export const DescargarExcel = async (axios, formData, headers) => {
+export const CargarExcel = async (axios, formData, headers) => {
     try {
       const controller = new AbortController();
-      return  await axios.post(URl_Archivo.DescargarExcel,formData,headers,{ signal: controller.signal });
+      return  await axios.post(URl_Archivo.CargarExcel,formData,headers,{ signal: controller.signal });
     } catch (error) {
       return null;
     }
   };
+
+  export const CargarPDFs = async (axios, formData, headers) => {
+    try {
+      const controller = new AbortController();
+      return  await axios.post(URl_Archivo.CargarPDFs,formData,headers,{ signal: controller.signal });
+    } catch (error) {
+      return null;
+    }
+  };
+
 
   
 export const descargarArchivo = async (axios,tipoFile,libranza) => {

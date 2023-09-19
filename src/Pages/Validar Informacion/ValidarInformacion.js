@@ -7,7 +7,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 // Component
 import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios';
 import { Loading } from '../../Componentes/Loading/Loading';
-import  ModalConfirmacion  from '../../Componentes/Modal/ModalConfirmacion';
+import ModalConfirmacion from '../../Componentes/Modal/ModalConfirmacion';
 //Services
 import { revisarCriterios, CriteriosRevisados } from '../../Services/CriteriosService';
 //Context
@@ -32,7 +32,7 @@ const ValidarInformacion = () => {
     Tasa_interes: ''
   });
   const [IsLoading, setIsLoading] = useState(false)
-  const [showModalConfirmacion, setshowModalConfirmacion] = useState(true)
+  const [showModalConfirmacion, setshowModalConfirmacion] = useState(false)
 
   const axiosPrivate = useAxiosPrivate()
 
@@ -88,9 +88,16 @@ const ValidarInformacion = () => {
     try {
       setIsLoading(true);
       const response = await revisarCriterios(axiosPrivate, valores);
-      setLista(response ? response.data : undefined)
+      if (response === null) {
+        throw new Error('Response null')
+      } else if (!response.data.success) {
+        throw new Error('Error Interno')
+      } else if (!response.data.result === null || response.data.result == []) {
+        alert('No hay libranzas para revisar')
+      }
+      setLista(response.data.result)
     } catch (error) {
-
+      alert('Error interno')
     } finally {
       setIsLoading(false)
     }
@@ -107,16 +114,14 @@ const ValidarInformacion = () => {
       setIsLoading(false)
     }
   }
-  const ComprarLibranzas =()=>{
 
-  }
 
   return (
 
     <>
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
 
-        <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800">
+        <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800 ">
           <form method='post' onSubmit={handleSubmitRevisar} className="w-full max-w-3xl">
             <div className="grid grid-cols-3 Tablet:grid-cols-1 Laptop:grid-cols-2 gap-4 mx-3 m-4">
               <div className="w-full  px-3 ">
@@ -245,7 +250,7 @@ const ValidarInformacion = () => {
 
           {/* tabla */}
           <div className="flex flex-wrap m-8 justify-center gap-6">
-            <button type="button" className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800" onClick={ComprarLibranzas}>Comprar Libranzas</button>
+            <button type="button" onClick={()=>setshowModalConfirmacion(true)} className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Comprar Libranzas</button>
           </div>
 
 
@@ -254,7 +259,7 @@ const ValidarInformacion = () => {
         </div>
       </div>
 
-      {showModalConfirmacion&&<ModalConfirmacion contenido={"hola"}/>}
+      {showModalConfirmacion&&<ModalConfirmacion contenido={"hola"} show={showModalConfirmacion} closeModal={setshowModalConfirmacion}/>}
     </>
   )
 }
