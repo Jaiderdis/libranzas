@@ -9,10 +9,11 @@ import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriteri
 import { Loading } from '../../Componentes/Loading/Loading';
 import ModalConfirmacion from '../../Componentes/Modal/ModalConfirmacion';
 //Services
-import { revisarCriterios, CriteriosRevisados } from '../../Services/CriteriosService';
+import { CriteriosRevisados, RevisarCriterios } from '../../Services/CriteriosService';
 //Context
 import CriteriosContext from '../../Context/CriteriosContext';
 import { tipoIncoporacion } from '../../utils/Criterio';
+import ModalInfo from '../../Componentes/Modal/ModalInfo';
 
 
 
@@ -33,6 +34,12 @@ const ValidarInformacion = () => {
   });
   const [IsLoading, setIsLoading] = useState(false)
   const [showModalConfirmacion, setshowModalConfirmacion] = useState(false)
+  const [showModalInfo, setShowModalInfo] = useState(false)
+  const [dataModalInfo, setDataModalInfo] = useState({
+    Title:'',
+    Mensaje:'',
+    Tipo:null
+  })
 
   const axiosPrivate = useAxiosPrivate()
 
@@ -87,7 +94,7 @@ const ValidarInformacion = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await revisarCriterios(axiosPrivate, valores);
+      const response = await RevisarCriterios(axiosPrivate, valores);
       if (response === null) {
         throw new Error('Response null')
       } else if (!response.data.success) {
@@ -106,13 +113,38 @@ const ValidarInformacion = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await CriteriosRevisados(axiosPrivate);
-      setLista(response.data != [] ? response.data : null)
+      const Criterios =await CriteriosRevisados();
+      setLista(Criterios)
+      if(Criterios==null){
+        setDataModalInfo({
+          Title:'Error al cargar libranzas',
+          Mensaje:'Error interno, validar mas tarde o comunicarse con el proveedor',
+          tipo:'Error'
+        })
+      }
+      // setDataModalInfo({
+      //   Title:'Exito',
+      //   Mensaje:'Se cargaron correctamente',
+      //   tipo:'Exito'
+      // })
     } catch (error) {
-
+      setDataModalInfo({
+        Title:'Error al cargar libranzas',
+        Mensaje:'Error interno, validar mas tarde o comunicarse con el proveedor',
+        tipo:'Error'
+      })
     } finally {
       setIsLoading(false)
+
+      setShowModalInfo(true)
     }
+  }
+
+
+  const closeModal=()=>{
+    
+    setShowModalInfo(false)
+    setDataModalInfo(null)
   }
 
 
@@ -259,7 +291,8 @@ const ValidarInformacion = () => {
         </div>
       </div>
 
-      {showModalConfirmacion&&<ModalConfirmacion contenido={"hola"} show={showModalConfirmacion} closeModal={setshowModalConfirmacion}/>}
+      { showModalConfirmacion  &&  <ModalConfirmacion contenido={"hola"} show={showModalConfirmacion} closeModal={setshowModalConfirmacion}/> }
+      { showModalInfo &&  <ModalInfo data={dataModalInfo} show={ModalInfo} close={closeModal}/>}
     </>
   )
 }

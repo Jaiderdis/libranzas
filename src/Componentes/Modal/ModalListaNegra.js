@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaXmark } from 'react-icons/fa6';
 import TableListaNegra from "../Tables/TableListaNegra/TableListaNegra";
 import CriteriosContext from "../../Context/CriteriosContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { Loading } from "../Loading/Loading";
-import { CriteriosRevisados, rechazarCriterio } from "../../Services/CriteriosService";
+
+import { CriteriosRevisados, RechazarCriterio } from "../../Services/CriteriosService";
 
 export default function ModalListaNegra() {
 
@@ -47,7 +47,7 @@ for (const key in valuesCheck) {
     }
 }
 
-    const response= await rechazarCriterio(axiosPrivate,nit,criterio,listRevision)
+    const response= await RechazarCriterio(axiosPrivate,nit,criterio,listRevision)
     if(response.data==-1){
       const res=await CriteriosRevisados(axiosPrivate)
       setLista(res.data)

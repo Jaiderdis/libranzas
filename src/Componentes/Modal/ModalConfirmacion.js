@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { FaXmark } from 'react-icons/fa6';
 import { AiFillCaretDown } from "react-icons/ai";
 import { descargarArchivo } from "../../Services/ArchivosService";
+import { AprobarLibranzas } from "../../Services/CriteriosService";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { listaDocumentos } from "../../utils/Archivos";
 import CriteriosContext from "../../Context/CriteriosContext";
 import { useContext } from "react";
+import { validarCriterios } from "../../utils/Criterio";
 
 
 export default function ModalConfirmacion({ libranza, closeModal, show }) {
-    const { lista, setLista } = useContext(CriteriosContext)
-    const axios = useAxiosPrivate()
+    const { lista } = useContext(CriteriosContext)
+   
 
     const stopPropagation = (e) => {
         e.stopPropagation();
@@ -27,32 +29,17 @@ export default function ModalConfirmacion({ libranza, closeModal, show }) {
         };
     }, [show]);
 
-    const ComprarLibranzas = () => {
-        const gestion = {
-            aprobadas: [],
-            rechazadas: []
-        }
+    // const AprobarLibranzas = () => {
+    //     const libranzas=validarCriterios(lista);
 
-        lista.map(item => {
-            let flug = true;
-            for (var key in item) {
-                if (item.hasOwnProperty(key)) {
-                    if (item[key] === 'NO CUMPLE') {
-                        flug = false
-                    }
-
-                }
-            }
-            if (flug) {
-                gestion.aprobadas.push(item.libranza)
-            } else {
-                gestion.rechazadas.push(item.libranza)
-            }
-        })
+    //     const response=AprobarLibranzas(libranzas);      
+    //     if(response==null){}
 
 
 
-    }
+
+
+    // }
 
 
     return (
@@ -86,7 +73,7 @@ export default function ModalConfirmacion({ libranza, closeModal, show }) {
 
                         </div>
                         <div className="flex flex-wrap justify-center gap-6">
-                            <button onClick={ComprarLibranzas} className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Descargar Archivo</button>
+                            <button  className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Descargar Archivo</button>
 
                         </div>
 

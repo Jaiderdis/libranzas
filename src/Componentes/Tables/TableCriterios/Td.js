@@ -5,7 +5,7 @@ import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
 import { VscError } from 'react-icons/vsc';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
-import { consultarInfoCriterio } from '../../../Services/CriteriosService';
+import { ConsultarInfoCriterio } from '../../../Services/CriteriosService';
 const resCriterio = {
 
     CUMPLE: {
@@ -58,7 +58,7 @@ const Td = ({ item, criterio }) => {
             setIsLoadingListaNegra(true)
 
 
-            const response = await consultarInfoCriterio(axiosPrivate, libranza, numcriterio);
+            const response = await ConsultarInfoCriterio(axiosPrivate, libranza, numcriterio);
             const dataEncontrada = response.data.item1;
             const dataEntidad = response.data.item2;
             setDataBlackList({criterio:numcriterio, dataEncontrada: dataEncontrada, dataEntidad: dataEntidad, libranza: libranza })
