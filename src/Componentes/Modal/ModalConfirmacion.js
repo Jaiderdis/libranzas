@@ -10,9 +10,8 @@ import { useContext } from "react";
 import { validarCriterios } from "../../utils/Criterio";
 
 
-export default function ModalConfirmacion({ libranza, closeModal, show }) {
-    const { lista } = useContext(CriteriosContext)
-   
+export default function ModalConfirmacion({ libranzas, closeModal, show }) {
+
 
     const stopPropagation = (e) => {
         e.stopPropagation();
@@ -29,17 +28,15 @@ export default function ModalConfirmacion({ libranza, closeModal, show }) {
         };
     }, [show]);
 
-    // const AprobarLibranzas = () => {
-    //     const libranzas=validarCriterios(lista);
+    const AprobarLibranzas = async () => {
 
-    //     const response=AprobarLibranzas(libranzas);      
-    //     if(response==null){}
-
+        const response=await AprobarLibranzas(libranzas);      
+        
 
 
 
 
-    // }
+    }
 
 
     return (
@@ -53,33 +50,38 @@ export default function ModalConfirmacion({ libranza, closeModal, show }) {
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                 <div onClick={stopPropagation} className="inline-block align-center rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <div className="bg-primary-500 text-white px-4 py-3 flex justify-between">
-                        <h2>Libranza </h2>
+                        <h2>Aprobancion de Libranzas</h2>
                         <div><span className="cursor-pointer" onClick={() => closeModal(false)}><FaXmark /></span></div>
                     </div>
                     <div className="bg-white px-4 py-8 flex flex-col  gap-4">
                         {/* <label className="font-medium text-gray-800">{datos.Content}</label> */}
-                        <div className="mx-16  px-3  mb-3 md:mb-0 MobileL:mx-0">
-                            <label className="block  tracking-wide text-gray-700 text-sm dark:text-white font-bold mb-2">
-                                Documento
-                            </label>
+                        <div className=" px-3  mb-3 md:mb-0 MobileL:mx-0">
+                            <div className="relative ">
+
+                                <label>Hay {libranzas.aprobadas.length == 1 ? `${libranzas.aprobadas.length} libranza aprobada` : `${libranzas.aprobadas.length} libranzas aprobadas`}  </label>
+                            </div>
+
+                            <div className="relative ">
+
+
+                                <label>Hay {libranzas.rechazadas.length == 1 ? `${libranzas.rechazadas.length} libranza rechazada` : `${libranzas.rechazadas.length} libranzas rechazadas`}  </label>
+                            </div>
+
+
                             <div className="relative">
 
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <span><AiFillCaretDown /> </span>
-                                </div>
+                                <label>Estas seguro de aprobar y rechazar estas libranzas?</label>
                             </div>
 
 
 
                         </div>
-                        <div className="flex flex-wrap justify-center gap-6">
-                            <button  className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Descargar Archivo</button>
 
-                        </div>
 
                         {/* <input type="text" className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3" /> */}
                     </div>
                     <div className="bg-gray-200 px-4 py-3 text-right">
+                        <button type="button" className="py-2 px-4  bg-secondary-500 hover:bg-secondary-600 text-white rounded mr-2" onClick={AprobarLibranzas}><i className="fas fa-times"></i> Comprar Libranzas</button>
                         <button type="button" className="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onClick={() => closeModal(false)}><i className="fas fa-times"></i> Cerrar</button>
 
                     </div>

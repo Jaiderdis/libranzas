@@ -11,39 +11,15 @@ const URl_Criterios = {
 
 
 export const RevisarCriterios = async (valores) => {
-  try {
-
-    const controller = new AbortController();
-    const response = await axiosPrivate.post(URl_Criterios.RevisarCriteriosAceptacion, valores, { signal: controller.signal })
-    if (response.status === 200) {
-      return response;
-    } else {
-      throw new Error(`Respuesta HTTP no exitosa: ${response.status}`);
-    }
-  } catch (error) {
-    return null;
-  }
+  return await axiosPrivate.post(URl_Criterios.RevisarCriteriosAceptacion,valores).then(res => res.data);
 };
 
-export const CriteriosRevisados = () => {
-  return axiosPrivate.get(URl_Criterios.CriteriosRevisados).then(res => res.data);
+export const CriteriosRevisados =async () => {
+  return await axiosPrivate.get(URl_Criterios.CriteriosRevisados).then(res => res.data);
 };
 
 export const AprobarLibranzas = async (libranzas) => {
-
-
-  // try {
-  //   const response = await axios.post(URl_Criterio.revisarLibranzas, libranzas).then(value=>{
-
-  //   })
-  //   if (response.status === 200) {
-  //     return response;
-  //   } else {
-  //     throw new Error(`Respuesta HTTP no exitosa: ${response.status}`);
-  //   }
-  // } catch (error) {
-  //   return null;
-  // }
+  return await axiosPrivate.post(URl_Criterios.RevisarLibranzas, libranzas).then(res=>res.data);
 };
 
 

@@ -36,9 +36,13 @@ const ValidarInformacion = () => {
   const [showModalConfirmacion, setshowModalConfirmacion] = useState(false)
   const [showModalInfo, setShowModalInfo] = useState(false)
   const [dataModalInfo, setDataModalInfo] = useState({
-    Title:'',
-    Mensaje:'',
-    Tipo:null
+    Title: '',
+    Mensaje: '',
+    Tipo: null
+  })
+  const [Revisionlibranzas,setRevisionLibranzas] = useState({
+    aprobadas: [],
+    rechazadas: []
   })
 
   const axiosPrivate = useAxiosPrivate()
@@ -92,57 +96,105 @@ const ValidarInformacion = () => {
   }
   const handleSubmitRevisar = async (e) => {
     e.preventDefault();
+
     try {
       setIsLoading(true);
-      const response = await RevisarCriterios(axiosPrivate, valores);
-      if (response === null) {
-        throw new Error('Response null')
-      } else if (!response.data.success) {
-        throw new Error('Error Interno')
-      } else if (!response.data.result === null || response.data.result == []) {
-        alert('No hay libranzas para revisar')
+      const libranzas = await RevisarCriterios(valores);
+
+      if (!libranzas.success) {
+        setLista(null);
+        return setDataModalInfo({
+          Title: "Libranzas Revisadas",
+          Mensaje: "No se encontraron libranzas",
+          tipo: 'Error'
+        })
       }
-      setLista(response.data.result)
+      setLista(libranzas.result);
+      setDataModalInfo({
+        Title: "Libranzas Revisadas",
+        Mensaje: "Se Consultaron correctamente",
+        tipo: 'Succes'
+      })
     } catch (error) {
-      alert('Error interno')
+      setDataModalInfo({
+        Title: 'Libranzas Revisadas',
+        Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
+        tipo: 'Error'
+      })
     } finally {
       setIsLoading(false)
+      setShowModalInfo(true)
     }
+
   }
   const handleSubmitRevisados = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const Criterios =await CriteriosRevisados();
-      setLista(Criterios)
-      if(Criterios==null){
-        setDataModalInfo({
-          Title:'Error al cargar libranzas',
-          Mensaje:'Error interno, validar mas tarde o comunicarse con el proveedor',
-          tipo:'Error'
+      const libranzas = await CriteriosRevisados();
+      if (!libranzas.success) {
+        setLista(null);
+        return setDataModalInfo({
+          Title: "Libranzas Revisadas",
+          Mensaje: "No se encontraron libranzas",
+          tipo: 'Error'
         })
       }
-      // setDataModalInfo({
-      //   Title:'Exito',
-      //   Mensaje:'Se cargaron correctamente',
-      //   tipo:'Exito'
-      // })
+      setLista(libranzas.result);
+     
+      setDataModalInfo({
+        Title: "Libranzas Revisadas",
+        Mensaje: `Se Consultaron correctamente ${libranzas.result.length} libranzas`,
+        tipo: 'Succes'
+      })
     } catch (error) {
       setDataModalInfo({
-        Title:'Error al cargar libranzas',
-        Mensaje:'Error interno, validar mas tarde o comunicarse con el proveedor',
-        tipo:'Error'
+        Title: 'Libranzas Revisadas',
+        Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
+        tipo: 'Error'
       })
     } finally {
       setIsLoading(false)
-
       setShowModalInfo(true)
     }
   }
+  const validarLibranzas = () => {
+
+    let libranzas={
+      aprobadas: [],
+      rechazadas: []
+    }
+    try {
+ 
+      lista.forEach(item => {
+        let flug = true;
+        for (var key in item) {
+          if (item.hasOwnProperty(key)) {
+            if (item[key] === 'NO CUMPLE') {
+              flug = false
+            }
+
+          }
+        }
+        if (flug) {
+          libranzas.aprobadas.push(item.libranza)
+        } else {
+          libranzas.rechazadas.push(item.libranza)
+        }
+      });
+
+      setRevisionLibranzas(libranzas)
+
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setshowModalConfirmacion(true)
+    }
 
 
-  const closeModal=()=>{
-    
+
+  }
+  const closeModal = () => {
     setShowModalInfo(false)
     setDataModalInfo(null)
   }
@@ -197,7 +249,6 @@ const ValidarInformacion = () => {
 
 
               </div>
-
               <div className="w-full  px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" >
                   No Pensionados
@@ -267,7 +318,6 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
                   placeholder="Total Cartera" />
               </div>
-
             </div>
             <div className="flex flex-wrap m-8 justify-center gap-6">
               <button type='submit' className="focus:outline-none text-white bg-secondary-500 hover:bg-secondary-600 focus:ring-4 focus:ring-offset-secondary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Revisar Criterios</button>
@@ -278,12 +328,17 @@ const ValidarInformacion = () => {
 
           {/* tabla */}
 
-          {IsLoading ? <Loading /> : lista && <TableCriterios lista={lista} />}
+          {IsLoading ? <Loading /> : lista &&
+            <>
+              <TableCriterios lista={lista} />
+              <div className="flex flex-wrap m-8 justify-center gap-6">
+                <button type="button" onClick={validarLibranzas} className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Comprar Libranzas</button>
+              </div>
+            </>
+          }
 
           {/* tabla */}
-          <div className="flex flex-wrap m-8 justify-center gap-6">
-            <button type="button" onClick={()=>setshowModalConfirmacion(true)} className="focus:outline-none text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-800">Comprar Libranzas</button>
-          </div>
+
 
 
 
@@ -291,8 +346,8 @@ const ValidarInformacion = () => {
         </div>
       </div>
 
-      { showModalConfirmacion  &&  <ModalConfirmacion contenido={"hola"} show={showModalConfirmacion} closeModal={setshowModalConfirmacion}/> }
-      { showModalInfo &&  <ModalInfo data={dataModalInfo} show={ModalInfo} close={closeModal}/>}
+      {showModalConfirmacion && <ModalConfirmacion libranzas={Revisionlibranzas} show={showModalConfirmacion} closeModal={setshowModalConfirmacion} />}
+      {showModalInfo && <ModalInfo data={dataModalInfo} show={ModalInfo} close={closeModal} />}
     </>
   )
 }

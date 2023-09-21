@@ -36,15 +36,6 @@ const ModalInfo = ({ data, show, close }) => {
                                 <label className="block  tracking-wide text-gray-700 text-sm font-bold mb-2">
                                     {data.Mensaje}
                                 </label>
-                                <div className="relative">
-
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-
-                                    </div>
-                                </div>
-
-
-
                             </div>
                         </div>
                         <div className="bg-gray-200 px-4 py-3 text-right">

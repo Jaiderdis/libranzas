@@ -6,7 +6,7 @@ const CriteriosContext =createContext({})
 export const CriteriosProvider = ({ children }) => {
     const [IsLoadingListaNegra, setIsLoadingListaNegra] = useState(false)
     const [showModalBlackList,setshowModalBlackList]=useState(false)
-    const [lista, setLista] = useState()
+    const [lista, setLista] = useState(null)
 
     const [dataBlackList, setDataBlackList] = useState({
         criterio:null,
