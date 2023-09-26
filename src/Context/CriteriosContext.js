@@ -1,17 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react'
 
-const CriteriosContext =createContext({})
-
+const CriteriosContext = createContext({})
 
 export const CriteriosProvider = ({ children }) => {
-    const [IsLoadingListaNegra, setIsLoadingListaNegra] = useState(false)
-    const [showModalBlackList,setshowModalBlackList]=useState(false)
-    const [lista, setLista] = useState(null)
+  const [IsLoadingListaNegra, setIsLoadingListaNegra] = useState(false)
+  const [showModalBlackList, setshowModalBlackList] = useState(false)
+  const [lista, setLista] = useState(null)
 
-    const [dataBlackList, setDataBlackList] = useState({
-        criterio:null,
-        dataEncontrada: [],
-        dataEntidad:
+  const [dataBlackList, setDataBlackList] = useState({
+    criterio: null,
+    dataEncontrada: [],
+    dataEntidad:
         {
           nombre: null,
           pais: null,
@@ -20,26 +19,24 @@ export const CriteriosProvider = ({ children }) => {
           estado: null,
           revision: null
         }
-      })
-  
+  })
 
-    return (
+  return (
         <CriteriosContext.Provider value={
             {
-            showModalBlackList,
-            setshowModalBlackList,
-            dataBlackList, 
-            setDataBlackList,
-            IsLoadingListaNegra,
-            setIsLoadingListaNegra,
-            lista,
-            setLista
+              showModalBlackList,
+              setshowModalBlackList,
+              dataBlackList,
+              setDataBlackList,
+              IsLoadingListaNegra,
+              setIsLoadingListaNegra,
+              lista,
+              setLista
             }}>
 
             {children}
         </CriteriosContext.Provider>
-    )
+  )
 }
 
-
-export default CriteriosContext;
+export default CriteriosContext

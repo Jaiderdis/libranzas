@@ -18,53 +18,35 @@
 
 // export default Home
 
+import React, { useState } from 'react'
 
-import React, { useEffect ,useState} from 'react';
-
-import Navbar from '../../Componentes/Navbar/Navbar';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Loading } from '../../Componentes/Loading/Loading';
-
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
 const Usuarios = () => {
-  const axiosPrivate = useAxiosPrivate();
-  const [users, setUsers] = useState();
-  const navigate= useNavigate();
-  const location= useLocation();
-  const [abortController, setAbortController] = useState(null);
+  const axiosPrivate = useAxiosPrivate()
+  const [users, setUsers] = useState()
 
-
-  const handleSubmit= async ()=>{
-
-    const controller = new AbortController();
-    setAbortController(controller);
+  const handleSubmit = async () => {
+    const controller = new AbortController()
     try {
-      const response = await axiosPrivate.get('/Archivos/prueba', { signal:controller.signal })
+      const response = await axiosPrivate.get('/Archivos/prueba', { signal: controller.signal })
       setUsers(response.data)
-      console.log('Respuesta de la API:', response.data);
-
+      console.log('Respuesta de la API:', response.data)
     } catch (error) {
-      console.error('Error al subir el archivo:', error);
-    }finally{
-      setAbortController(null);
+      console.error('Error al subir el archivo:', error)
     }
-
   }
-
 
   return (
     <>
     <button onClick={handleSubmit}>consumir</button>
       <article>
-           {users&&users.map(x=>(<h1>{x}</h1>))}
+           {users && users.map((x, index) => (<h1 key={index}>{x}</h1>))}
         </article>
-      
 
     </>
 
-  );
-};
-
+  )
+}
 
 export default Usuarios

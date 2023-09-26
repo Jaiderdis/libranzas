@@ -1,24 +1,20 @@
 import React, { useContext, useState } from 'react'
-import TbodyCriterios from './TbodyCriterios';
-import Modal from '../../Modal/ModalListaNegra';
-import CriteriosContext from '../../../Context/CriteriosContext';
-import ModalArchivos from '../../Modal/ModalArchivos';
-import ModalListaNegra from '../../Modal/ModalListaNegra';
-import { Loading } from '../../Loading/Loading';
-
-
-
+import TbodyCriterios from './TbodyCriterios'
+import CriteriosContext from '../../../Context/CriteriosContext'
+import ModalArchivos from '../../Modal/ModalArchivos'
+import ModalListaNegra from '../../Modal/ModalListaNegra'
+import { Loading } from '../../Loading/Loading'
 
 const TableCriterios = ({ lista }) => {
-    const { showModalBlackList, IsLoadingListaNegra } = useContext(CriteriosContext)
-    const [modalDownFiles, setModalDownFiles] = useState(false)
-    const [datos, setDatos] = useState(null)
-    const descargarArchivos = (libranza) => {
-        setDatos(libranza)
-        setModalDownFiles(true)
-    }
+  const { IsLoadingListaNegra } = useContext(CriteriosContext)
+  const [modalDownFiles, setModalDownFiles] = useState(false)
+  const [datos, setDatos] = useState(null)
+  const descargarArchivos = (libranza) => {
+    setDatos(libranza)
+    setModalDownFiles(true)
+  }
 
-    return (
+  return (
         <>
             {lista &&
                 <div className=' relative w-4/5 '>
@@ -36,10 +32,6 @@ const TableCriterios = ({ lista }) => {
                                 <div className='bg-sky-500  h-1 w-1/2 rounded-lg'></div>
                                 <div className='dark:text-white  rounded-lg text-xs text-center'>REVISAR</div>
                             </div>
-
-
-                       
-                            
 
                         </div>
                     </div>
@@ -81,22 +73,19 @@ const TableCriterios = ({ lista }) => {
                                     <th className="px-6 py-3 text-sm text-center font-medium whitespace-nowrap border-darkSecondary-500 border bg-primary-500" scope="“col”">Archivos</th>
                                 </tr>
                             </thead>
-                            <TbodyCriterios lista={lista} downFiles={descargarArchivos} />
+                            <TbodyCriterios lista={lista} DescargarArchivo={descargarArchivos} />
                         </table>
-
-
 
                     </div>
 
-                  
                 </div>
 
             }
-            {modalDownFiles && <ModalArchivos libranza={datos} setShowModal={setModalDownFiles} show={modalDownFiles} />}
+            {modalDownFiles && <ModalArchivos libranza={datos} close={setModalDownFiles} show={modalDownFiles} />}
             {IsLoadingListaNegra ? <Loading /> : <ModalListaNegra />}
         </>
 
-    )
+  )
 }
 
 export default TableCriterios

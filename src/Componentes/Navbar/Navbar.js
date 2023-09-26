@@ -1,60 +1,56 @@
 import React, { useEffect, useRef, useState } from 'react'
-//----Images----
+// ----Images----
 import profilePic from '../../Img/user-default.png'
 import logo from '../../Img/Logo_Exponencial_GI-sinfondo color.png'
-//----Images----
-//----Hooks----
-import useAuth from '../../hooks/useAuth';
-import {useLocation, useNavigate } from 'react-router-dom';
-//----Hooks----
-//----styles----
+// ----Images----
+// ----Hooks----
+import useAuth from '../../hooks/useAuth'
+import { useLocation, useNavigate } from 'react-router-dom'
+// ----Hooks----
+// ----styles----
 import '../Navbar/Navbar.modules.css'
-//----styles----
-//----Icons----
-import { MdLightMode } from 'react-icons/md';
-//----Icons----
-//----Utils----
-import { links } from '../../utils/Links';
-//----Utils----
-
+// ----styles----
+// ----Icons----
+import { MdLightMode } from 'react-icons/md'
+// ----Icons----
+// ----Utils----
+import { links } from '../../utils/Links'
+// ----Utils----
 
 const Navbar = () => {
-    const { outLogin, user, rol, toggleModeDark } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
-    let SideBarRef = useRef();
-    let btnSideBarRef = useRef();
-    let PerfilRef = useRef();
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [isPerfilOpen, setIsPerfilOpen] = useState(false);
-    const filteredLinks = links.filter(({ roles }) => roles.includes(rol));
-    useEffect(() => {
-        let handler = (e) => {
-            if (!e.composedPath().includes(PerfilRef.current)) {
-                setIsPerfilOpen(false)
-            }
-
-        }
-        document.addEventListener('mousedown', handler)
-    }, [isPerfilOpen]);
-
-    useEffect(() => {
-        let handler = (e) => {
-
-            if (!e.composedPath().includes(SideBarRef.current) && !e.composedPath().includes(btnSideBarRef.current)) {
-                setSidebarOpen(false)
-            }
-
-        }
-        document.addEventListener('mousedown', handler)
-    }, [sidebarOpen]);
-
-    const handlerCerrarSesion = () => {
-        outLogin()
-        navigate('/login')
+  const { outLogin, user, rol, toggleModeDark } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const SideBarRef = useRef()
+  const btnSideBarRef = useRef()
+  const PerfilRef = useRef()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isPerfilOpen, setIsPerfilOpen] = useState(false)
+  const filteredLinks = links.filter(({ roles }) => roles.includes(rol))
+  useEffect(() => {
+    const handler = (e) => {
+      if (!e.composedPath().includes(PerfilRef.current)) {
+        setIsPerfilOpen(false)
+      }
     }
+    document.addEventListener('mousedown', handler)
+  }, [isPerfilOpen])
 
-    return (
+  useEffect(() => {
+    const handler = (e) => {
+      if (!e.composedPath().includes(SideBarRef.current) && !e.composedPath().includes(btnSideBarRef.current)) {
+        setSidebarOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+  }, [sidebarOpen])
+
+  const handlerCerrarSesion = () => {
+    outLogin()
+    navigate('/login')
+  }
+
+  return (
         <>
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-darkPrimary-500 dark:border-gray-700">
                 <div className="px-3 py-3  lg:px-5 lg:pl-3">
@@ -74,13 +70,13 @@ const Navbar = () => {
                         <div className="flex items-center">
                             <div ref={PerfilRef} className="flex items-center ml-3 gap-3">
                                 <div>
-                                    <button type="button" className={"flex text-sm bg-gray-800 rounded-full "} onClick={toggleModeDark} aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                    <button type="button" className={'flex text-sm bg-gray-800 rounded-full '} onClick={toggleModeDark} aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <MdLightMode size={20} className='dark:text-white  dark:bg-gray-800 text-black bg-white' />
                                     </button>
                                 </div>
 
                                 <div>
-                                    <button type="button" className={"flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"} onClick={() => { setIsPerfilOpen(!isPerfilOpen) }} aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                    <button type="button" className={'flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'} onClick={() => { setIsPerfilOpen(!isPerfilOpen) }} aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span className="sr-only">Open user menu</span>
                                         <img className="w-8 h-8 rounded-full" src={profilePic} alt="user photo" />
                                     </button>
@@ -127,7 +123,6 @@ const Navbar = () => {
                                     {icon}
                                     <span className="ml-3">{label}</span>
 
-
                                 </a>
                             </li>
                         )}
@@ -141,17 +136,16 @@ const Navbar = () => {
                         <p>
                             © All Copyright 2023
                             <br />
-                            por <strong><a href="https://www.1cero1.com/" target="_blank">101 S.A.S</a></strong>
+                            por <strong><a href="https://www.1cero1.com/" target="_blank" rel="noreferrer">101 S.A.S</a></strong>
                         </p>
 
                     </div>
                 </footer>
             </aside>
 
-
         </>
 
-    )
+  )
 }
 
 export default Navbar

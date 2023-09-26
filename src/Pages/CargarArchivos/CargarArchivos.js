@@ -1,189 +1,154 @@
-import React, { useState } from 'react';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { Loading } from '../../Componentes/Loading/Loading';
-import ModalInfo from '../../Componentes/Modal/ModalInfo';
-import { CargarExcel ,CargarPDFs} from '../../Services/ArchivosService';
-
-
-
+import React, { useState } from 'react'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import { Loading } from '../../Componentes/Loading/Loading'
+import ModalInfo from '../../Componentes/Modal/ModalInfo'
+import { CargarExcel, CargarPDFs } from '../../Services/ArchivosService'
 
 const CargarArchivos = () => {
-  const [selectedFileExcel, setSelectedFileExcel] = useState(null);
-  const [loadingSaveFile, setLoadingSaveFile] = useState(false);
-  const [modalInfo, setModalInfo] = useState(false);
-  const [datosModalInfo, setDatosModalInfo] = useState({ title: '', Content: '' });
-  const [selectedFileDocument, setSelectedFileDocument] = useState(null);
-  const [draggedExcelOver, setDraggedExcelOver] = useState(false);
-  const [draggedDocumentOver, setDraggedDocumentOver] = useState(false);
-  const axiosPrivate = useAxiosPrivate();
+  const [selectedFileExcel, setSelectedFileExcel] = useState(null)
+  const [loadingSaveFile, setLoadingSaveFile] = useState(false)
+  const [modalInfo, setModalInfo] = useState({ Title: '', Mensaje: '', Visible: false })
 
+  const [selectedFileDocument, setSelectedFileDocument] = useState(null)
+  const [draggedExcelOver, setDraggedExcelOver] = useState(false)
+  const [draggedDocumentOver, setDraggedDocumentOver] = useState(false)
+  useAxiosPrivate()
 
   // Adjuntar Excel
 
   const handleExcelChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]
 
     if (file) {
       if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
         setSelectedFileExcel(file)
       } else {
-        setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .xlsx válido.' })
-        setModalInfo(true)
+        setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
       }
     }
-  };
+  }
   const handleDragOverExcel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDraggedExcelOver(true);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setDraggedExcelOver(true)
+  }
   const handleDragLeaveExcel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDraggedExcelOver(false);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setDraggedExcelOver(false)
+  }
   const handleDropExcel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    e.preventDefault()
+    e.stopPropagation()
+    const droppedFiles = Array.from(e.dataTransfer.files)
     if (droppedFiles[0].name.endsWith('.xlsx')) {
-      setSelectedFileExcel(droppedFiles[0]);
-      setDraggedExcelOver(false);
+      setSelectedFileExcel(droppedFiles[0])
+      setDraggedExcelOver(false)
     } else {
-      setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .xlsx válido.' })
-      setModalInfo(true)
-
+      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
     }
-
-  };
-    // Adjuntar Excel
-
+  }
+  // Adjuntar Excel
 
   // Adjuntar Documentos
   const handleDocumentChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]
     if (file) {
       if (file.type === 'application/x-rar-compressed' || file.name.endsWith('.rar')) {
         setSelectedFileDocument(file)
       } else {
-        setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .rar o .zip válido.' })
-        setModalInfo(true)
+        setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .rar o .zip válido.', Visible: true })
       }
     }
-  };
+  }
   const handleDragOverDocument = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDraggedDocumentOver(true);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setDraggedDocumentOver(true)
+  }
   const handleDragLeaveDocument = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDraggedDocumentOver(false);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setDraggedDocumentOver(false)
+  }
   const handleDropDocument = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    e.preventDefault()
+    e.stopPropagation()
+    const droppedFiles = Array.from(e.dataTransfer.files)
     if (droppedFiles[0].name.endsWith('.rar') || droppedFiles[0].name.endsWith('.zip')) {
-      setSelectedFileDocument(droppedFiles[0]);
-      setDraggedDocumentOver(false);
+      setSelectedFileDocument(droppedFiles[0])
+      setDraggedDocumentOver(false)
     } else {
-      setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo .xlsx válido.' })
-      setModalInfo(true)
+      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
     }
-  };
+  }
   // Adjuntar Documentos
 
   // Subir Archivo Excel
   const handleSubmitExcel = async () => {
     if (!selectedFileExcel) {
-      setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo antes de subirlo.' })
-      setModalInfo(true)
-      return;
+      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo antes de subirlo.', Visible: true })
+
+      return
     }
 
     try {
       setLoadingSaveFile(true)
-      const formData = new FormData();
-      formData.append('Archivo', selectedFileExcel);
 
-      const response = await CargarExcel(axiosPrivate, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      })
+      const formData = new FormData()
+      formData.append('Archivo', selectedFileExcel)
 
-      if(response===null)
-      {
-        throw new Error('Error Interno')
-      }
-      
-      setDatosModalInfo(
-        { 
-          title: response.data.success ? 'Exito' : 'Error',
-          Content:response.data.message
+      const response = await CargarExcel(formData)
+
+      setModalInfo(
+        {
+          Title: response.success ? 'Exito' : 'Error',
+          Mensaje: response.message,
+          Visible: true
         })
-      setModalInfo(true)
-     
-
     } catch (error) {
-      setDatosModalInfo({ title: 'Error', Content: 'Error al cargar archivo excel' })
-      setModalInfo(true)
+      setModalInfo({ Title: 'Error', Mensaje: 'Error al cargar archivo excel', Visible: true })
     } finally {
       setLoadingSaveFile(false)
     }
-
   }
 
   // Subir PDFs
   const handleSubmitDocument = async () => {
     if (!selectedFileDocument) {
-      setDatosModalInfo({ title: 'Advertencia', Content: 'Por favor, selecciona un archivo antes de subirlo.' })
-      setModalInfo(true)
-      return;
+      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo antes de subirlo.', Visible: true })
+
+      return
     }
     try {
       setLoadingSaveFile(true)
-      const formData = new FormData();
-      formData.append('Archivo', selectedFileDocument);
+      const formData = new FormData()
+      formData.append('Archivo', selectedFileDocument)
 
-      const response = await CargarPDFs(axiosPrivate, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      })
+      const response = await CargarPDFs(formData)
 
-      if(response===null)
-      {
-        throw new Error('Error Interno')
-      }
-      
-      setDatosModalInfo(
-        { 
-          title: response.data.success ? 'Exito' : 'Error',
-          Content:response.data.message
+      setModalInfo(
+        {
+          Title: response.success ? 'Exito' : 'Error',
+          Mensaje: response.message,
+          Visible: true
         })
-      setModalInfo(true)
-     
-
     } catch (error) {
-      setDatosModalInfo({ title: 'Error', Content: 'Error al cargar los pdfs' })
-      setModalInfo(true)
+      setModalInfo({
+        Title: 'Carga Archivos',
+        Mensaje: 'Error al cargar los pdfs',
+        Visible: true
+      })
     } finally {
       setLoadingSaveFile(false)
     }
-    
-
   }
-
-
 
   return (
     <>
       {loadingSaveFile && <Loading />}
 
-      {modalInfo && <ModalInfo datos={datosModalInfo} setShowModal={setModalInfo} show={modalInfo} />}
+      {modalInfo.Visible && <ModalInfo data={modalInfo} close={setModalInfo} />}
 
       <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong>SUBIR EXCEL</strong></h1>
@@ -201,12 +166,14 @@ const CargarArchivos = () => {
             htmlFor="excel-dropzone"
             className="flex flex-col items-center justify-center w-1/2 MobileL:w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
-            {selectedFileExcel ? (
+            {selectedFileExcel
+              ? (
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">Archivo Adjuntado:</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{selectedFileExcel.name}</p>
               </div>
-            ) : (
+                )
+              : (
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg
                   className="w-20 h-20 mb-4 text-gray-500 dark:text-gray-400"
@@ -228,7 +195,7 @@ const CargarArchivos = () => {
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">XLSX</p>
               </div>
-            )}
+                )}
             <input
               id="excel-dropzone"
               type="file"
@@ -267,12 +234,14 @@ const CargarArchivos = () => {
               htmlFor="document-dropzone"
               className="flex flex-col items-center justify-center w-1/2 MobileL:w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
             >
-              {selectedFileDocument ? (
+              {selectedFileDocument
+                ? (
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">Archivo Adjuntado:</p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">{selectedFileDocument.name}</p>
                 </div>
-              ) : (
+                  )
+                : (
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <svg
                     className="w-20 h-20 mb-4 text-gray-500 dark:text-gray-400"
@@ -294,7 +263,7 @@ const CargarArchivos = () => {
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">RAR o ZIP</p>
                 </div>
-              )}
+                  )}
               <input
                 id="document-dropzone"
                 type="file"
@@ -316,7 +285,7 @@ const CargarArchivos = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CargarArchivos;
+export default CargarArchivos

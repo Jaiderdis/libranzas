@@ -1,45 +1,38 @@
-import { Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
-//----styles----
-import './App.css';
-//----Context----
-import { CriteriosProvider } from './Context/CriteriosContext';
-//----Componets----
-import RequireAuth from './Componentes/RequireAuth';
-import Layout from './Componentes/Layout/Layout';
-import LayoutLogin from './Componentes/Layout/LayoutLogin';
-import ProtectedRoute from './Componentes/ProtectedRoute';
-//----Pages----
-import Login from './Pages/Login/Login';
-import CargarArchivos from './Pages/CargarArchivos/CargarArchivos';
-import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion';
-import Unauthorized from './Pages/Unauthorized/Unauthorized';
-import Dashboard from './Pages/Dashboard/Dashboard';
-import Usuarios from './Pages/Usuarios/Usuarios';
-import NotFound from './Pages/NotFound/NotFound';
-import Informes from './Pages/Informes/Informes';
-//----CustomHooks----
-import useAuth from './hooks/useAuth';
-//----Utils----
-import { ROLES } from './utils/Rols';
+import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+// ----styles----
+import './App.css'
+// ----Context----
+import { CriteriosProvider } from './Context/CriteriosContext'
+// ----Componets----
+import RequireAuth from './Componentes/RequireAuth'
+import Layout from './Componentes/Layout/Layout'
+import LayoutLogin from './Componentes/Layout/LayoutLogin'
+import ProtectedRoute from './Componentes/ProtectedRoute'
+// ----Pages----
+import Login from './Pages/Login/Login'
+import CargarArchivos from './Pages/CargarArchivos/CargarArchivos'
+import ValidarInformacion from './Pages/Validar Informacion/ValidarInformacion'
+import Unauthorized from './Pages/Unauthorized/Unauthorized'
+import Dashboard from './Pages/Dashboard/Dashboard'
+import Usuarios from './Pages/Usuarios/Usuarios'
+import NotFound from './Pages/NotFound/NotFound'
+import Informes from './Pages/Informes/Informes'
+// ----CustomHooks----
+import useAuth from './hooks/useAuth'
+// ----Utils----
+import { ROLES } from './utils/Rols'
 
-
-
-
-function App() {
-  const { modeDark } = useAuth();
+function App () {
+  const { modeDark } = useAuth()
 
   useEffect(() => {
-
     if (modeDark) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add('dark')
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark')
     }
-
-
   }, [modeDark])
-
 
   return (
 
@@ -56,7 +49,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
 
-
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />} >
 
@@ -72,17 +64,11 @@ function App() {
             <Route path="/CargarArchivos" element={<CargarArchivos />} />
           </Route>
 
-
         </Route>
       </Route>
 
-
-
     </Routes>
-  );
+  )
 }
 
-export default App;
-
-
-
+export default App

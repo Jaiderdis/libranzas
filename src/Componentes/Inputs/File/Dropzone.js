@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const Dropzone = ({ onFileChange, accept, labelText, icon, uploadedFileName }) => {
-  const [draggedOver, setDraggedOver] = useState(false);
+  const [draggedOver, setDraggedOver] = useState(false)
 
   const handleDragEnter = (e) => {
-    e.preventDefault();
-    setDraggedOver(true);
-  };
+    e.preventDefault()
+    setDraggedOver(true)
+  }
 
   const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   const handleDragLeave = () => {
-    setDraggedOver(false);
-  };
+    setDraggedOver(false)
+  }
 
   const handleDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setDraggedOver(false);
-    onFileChange(droppedFiles[0]);
-  };
+    e.preventDefault()
+    const droppedFiles = Array.from(e.dataTransfer.files)
+    setDraggedOver(false)
+    onFileChange(droppedFiles[0])
+  }
 
   return (
     <div
@@ -33,12 +33,14 @@ const Dropzone = ({ onFileChange, accept, labelText, icon, uploadedFileName }) =
         draggedOver ? 'bg-blue-100' : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
       }`}
     >
-      {uploadedFileName ? (
+      {uploadedFileName
+        ? (
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">Archivo Arrastrado:</p>
           <p className="text-xs text-gray-500 dark:text-gray-400">{uploadedFileName}</p>
         </div>
-      ) : (
+          )
+        : (
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           {icon}
           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
@@ -46,9 +48,9 @@ const Dropzone = ({ onFileChange, accept, labelText, icon, uploadedFileName }) =
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">{accept}</p>
         </div>
-      )}
+          )}
     </div>
-  );
-};
+  )
+}
 
-export default Dropzone;
+export default Dropzone

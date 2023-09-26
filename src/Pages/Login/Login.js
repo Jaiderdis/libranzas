@@ -1,85 +1,74 @@
-//------Hooks------
-import { useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+// ------Hooks------
+import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
-//------Services-------
-import { loginUser } from '../../Services/LoginService';
+// ------Services-------
+import { loginUser } from '../../Services/LoginService'
 
-//------Css-------
-import '../Login/Login.modules.css';
+// ------Css-------
+import '../Login/Login.modules.css'
 
-//------Utils-------
-import { CodeErrors } from '../../utils/CodeErrors';
+// ------Utils-------
+import { CodeErrors } from '../../utils/CodeErrors'
 
-//------Components-------
+// ------Components-------
 
-import { Loading } from '../../Componentes/Loading/Loading'
-//------Img-------
+// ------Img-------
 import logoCompleto from '../../Img/logo-completo.png'
 
-//------Icons------
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
-
-
-
+// ------Icons------
+import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 
 const Login = () => {
-
-  const { saveUser } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const userRef = useRef();
-  const errRef = useRef();
-  const [documento, setDocumento] = useState('');
-  const [password, setPassword] = useState('');
-  const [errMsg, setErrMsg] = useState('');
-  const [documentoError, setDocumentoError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+  const { saveUser } = useAuth()
+  const navigate = useNavigate()
+  const userRef = useRef()
+  const errRef = useRef()
+  const [documento, setDocumento] = useState('')
+  const [password, setPassword] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [documentoError, setDocumentoError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     setIsLoadingLogin(true)
-    setDocumentoError(false);
-    setPasswordError(false);
+    setDocumentoError(false)
+    setPasswordError(false)
 
     if (!documento || !password) {
-      if (!documento) setDocumentoError(true);
-      if (!password) setPasswordError(true);
-      setIsLoadingLogin(false);
-      return;
+      if (!documento) setDocumentoError(true)
+      if (!password) setPasswordError(true)
+      setIsLoadingLogin(false)
+      return
     }
 
-
     try {
-
       const response = await loginUser({ documento, password })
       if (response?.data?.success) {
-        saveUser(response.data.result);
+        saveUser(response.data.result)
         navigate('/')
       } else {
         if (!response?.data) {
-          setErrMsg('Error interno');
+          setErrMsg('Error interno')
         } else if (response?.data?.result?.code === CodeErrors.UsuarioInvalido) {
-          setErrMsg("Usuario Invalido");
+          setErrMsg('Usuario Invalido')
         } else if (response?.data?.result?.code === CodeErrors.ContraseñaIncorrecta) {
-          setErrMsg('Contraseña Incorrecta');
+          setErrMsg('Contraseña Incorrecta')
         } else {
           setErrMsg('Error Interno')
         }
       }
-
     } catch (err) {
-      setErrMsg('Error interno');
-      errRef.current.focus();
+      setErrMsg('Error interno')
+      errRef.current.focus()
     } finally {
-
       setIsLoadingLogin(false)
     }
   }
-
 
   return (
     <div className="fondo bg-center bg-no-repeat bg-fixed bg-cover" >
@@ -102,13 +91,13 @@ const Login = () => {
             <div className="bg-white h-1 w-1/5 mb-4"></div>
           </div>
 
-          <div ref={errRef} className={`error-msg ${errMsg ? "show" : "hidden"} flex justify-center h-auto w-full p-3 text-center bg-red-500 error font-normal MobileM:text-xs border-red-500 border-2 rounded-lg text-white`}  >
-            {!isLoadingLogin ?
-              <p>{errMsg}</p> :
-              <svg class="w-4 h-4   text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
+          <div ref={errRef} className={`error-msg ${errMsg ? 'show' : 'hidden'} flex justify-center h-auto w-full p-3 text-center bg-red-500 error font-normal MobileM:text-xs border-red-500 border-2 rounded-lg text-white`} >
+            {!isLoadingLogin
+              ? <p>{errMsg}</p>
+              : <svg className="w-4 h-4   text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                 </path>
               </svg>}
@@ -142,16 +131,15 @@ const Login = () => {
             <button className="bg-secondary-500 hover:bg-secondary-600  hover:-translate-y-1 text-white font-bold py-4 px-8 my-3  rounded-full flex items-center gap-2">
               <span>Ingresar</span>
               <span>
-                {!isLoadingLogin ?
-                  <BsFillArrowRightCircleFill /> :
-                  <svg class="w-4 h-4 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
+                {!isLoadingLogin
+                  ? <BsFillArrowRightCircleFill />
+                  : <svg className="w-4 h-4 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                     </path>
                   </svg>}
-
 
               </span>
 
@@ -169,4 +157,3 @@ const Login = () => {
 }
 
 export default Login
-

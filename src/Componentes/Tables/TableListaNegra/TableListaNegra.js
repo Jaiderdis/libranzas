@@ -1,13 +1,7 @@
-import React, { useState } from 'react'
-import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
-
+import React from 'react'
 import '../TableListaNegra/TableListaNegra.modules.css'
-import { VscError } from 'react-icons/vsc';
-import { RiErrorWarningFill } from 'react-icons/ri';
 
 const TableListaNegra = ({ data, handleCheckboxChange }) => {
-
-
   return (
     <div className=' relative   w-full'>
       <div className='m-5 flex justify-center flex-col items-center gap-3'>
@@ -73,7 +67,6 @@ const TableListaNegra = ({ data, handleCheckboxChange }) => {
               </tr>
             ))}
 
-
           </tbody>
         </table>
       </div>
@@ -83,4 +76,3 @@ const TableListaNegra = ({ data, handleCheckboxChange }) => {
 }
 
 export default TableListaNegra
-

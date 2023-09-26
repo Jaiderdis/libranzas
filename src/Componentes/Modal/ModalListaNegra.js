@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaXmark } from 'react-icons/fa6';
-import TableListaNegra from "../Tables/TableListaNegra/TableListaNegra";
-import CriteriosContext from "../../Context/CriteriosContext";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import React, { useContext, useEffect, useState } from 'react'
+import { FaXmark } from 'react-icons/fa6'
+import TableListaNegra from '../Tables/TableListaNegra/TableListaNegra'
+import CriteriosContext from '../../Context/CriteriosContext'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
-import { CriteriosRevisados, RechazarCriterio } from "../../Services/CriteriosService";
+import { CriteriosRevisados, RechazarCriterio } from '../../Services/CriteriosService'
 
-export default function ModalListaNegra() {
+export default function ModalListaNegra () {
+  const { setshowModalBlackList, showModalBlackList, dataBlackList, setLista } = useContext(CriteriosContext)
 
-  const { setshowModalBlackList, showModalBlackList, dataBlackList,setLista } = useContext(CriteriosContext)
-
-  const [valuesCheck, setValuesCheck] = useState([]);
-  const axiosPrivate=useAxiosPrivate();
+  const [valuesCheck, setValuesCheck] = useState([])
+  const axiosPrivate = useAxiosPrivate()
   const handleCheckboxChange = (index) => {
     // Actualizar el estado de un checkbox en función de su índice
     // console.log(!valuesCheck[index].Revision)
@@ -22,34 +21,32 @@ export default function ModalListaNegra() {
         ...valuesCheck[index],
         Revision: !valuesCheck[index].Revision
       }
-    });
-
-  };
+    })
+  }
   const stopPropagation = (e) => {
-    e.stopPropagation();
-  };
-
+    e.stopPropagation()
+  }
   const handleRechazarCriterio = async () => {
-    const nit=dataBlackList.dataEntidad.nit
-    const criterio=dataBlackList.criterio
-    const listRevision = [];
+    const nit = dataBlackList.dataEntidad.nit
+    const criterio = dataBlackList.criterio
+    const listRevision = []
 
-// Recorremos el objeto original
-for (const key in valuesCheck) {
-    if (valuesCheck.hasOwnProperty(key)) {
-        const item = valuesCheck[key];
+    // Recorremos el objeto original
+    for (const key in valuesCheck) {
+      if (Object.prototype.hasOwnProperty.call(valuesCheck, key)) {
+        const item = valuesCheck[key]
         const nuevoItem = {
-            "Id": item.Id,
-            "Documento": item.Document, 
-            "Revision": item.Revision ? 1 : 0
-        };
-        listRevision.push(nuevoItem);
+          Id: item.Id,
+          Documento: item.Document,
+          Revision: item.Revision ? 1 : 0
+        }
+        listRevision.push(nuevoItem)
+      }
     }
-}
 
-    const response= await RechazarCriterio(axiosPrivate,nit,criterio,listRevision)
-    if(response.data==-1){
-      const res=await CriteriosRevisados(axiosPrivate)
+    const response = await RechazarCriterio(nit, criterio, listRevision)
+    if (response === -1) {
+      const res = await CriteriosRevisados(axiosPrivate)
       setLista(res.data)
       setshowModalBlackList(false)
     }
@@ -57,27 +54,21 @@ for (const key in valuesCheck) {
 
   useEffect(() => {
     if (dataBlackList?.dataEncontrada !== null) {
-      const valores = dataBlackList.dataEncontrada.map(x => ({ Id: x.id, Document: dataBlackList.dataEntidad.nit, Revision: false }));
+      const valores = dataBlackList.dataEncontrada.map(x => ({ Id: x.id, Document: dataBlackList.dataEntidad.nit, Revision: false }))
       setValuesCheck(valores)
     }
-  }, [dataBlackList]);
+  }, [dataBlackList])
 
   useEffect(() => {
     if (showModalBlackList) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
     return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [showModalBlackList]);
-
-
-
-
-
-
+      document.body.style.overflow = 'auto'
+    }
+  }, [showModalBlackList])
 
   return (
     <>
@@ -113,6 +104,5 @@ for (const key in valuesCheck) {
 
     </>
 
-
-  );
+  )
 }

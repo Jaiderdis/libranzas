@@ -1,23 +1,18 @@
-
 import React, { useContext, useState } from 'react'
-//CustomHooks
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+// CustomHooks
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 // icons
-import { AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretDown } from 'react-icons/ai'
 // Component
-import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios';
-import { Loading } from '../../Componentes/Loading/Loading';
-import ModalConfirmacion from '../../Componentes/Modal/ModalConfirmacion';
-//Services
-import { CriteriosRevisados, RevisarCriterios } from '../../Services/CriteriosService';
-//Context
-import CriteriosContext from '../../Context/CriteriosContext';
-import { tipoIncoporacion } from '../../utils/Criterio';
-import ModalInfo from '../../Componentes/Modal/ModalInfo';
-
-
-
-
+import TableCriterios from '../../Componentes/Tables/TableCriterios/TableCriterios'
+import { Loading } from '../../Componentes/Loading/Loading'
+import ModalConfirmacion from '../../Componentes/Modal/ModalConfirmacion'
+// Services
+import { CriteriosRevisados, RevisarCriterios } from '../../Services/CriteriosService'
+// Context
+import CriteriosContext from '../../Context/CriteriosContext'
+import { tipoIncoporacion, validarCriterios } from '../../utils/Criterio'
+import ModalInfo from '../../Componentes/Modal/ModalInfo'
 
 const ValidarInformacion = () => {
   const { lista, setLista } = useContext(CriteriosContext)
@@ -27,32 +22,26 @@ const ValidarInformacion = () => {
     Saldo_cartera: '',
     Saldo_pensionados: '',
     Saldo_no_pensionados: '',
-    tipo_Libranza: "1",
+    tipo_Libranza: '1',
     Cartera_incorporada: '',
     Cartera_no_incorporada: '',
     Tasa_interes: ''
-  });
+  })
   const [IsLoading, setIsLoading] = useState(false)
   const [showModalConfirmacion, setshowModalConfirmacion] = useState(false)
-  const [showModalInfo, setShowModalInfo] = useState(false)
-  const [dataModalInfo, setDataModalInfo] = useState({
-    Title: '',
-    Mensaje: '',
-    Tipo: null
-  })
-  const [Revisionlibranzas,setRevisionLibranzas] = useState({
+  const [showModalInfo, setshowModalInfo] = useState({ Title: null, Mensaje: null, Visible: false })
+
+  const [Revisionlibranzas, setRevisionLibranzas] = useState({
     aprobadas: [],
     rechazadas: []
   })
 
-  const axiosPrivate = useAxiosPrivate()
+  useAxiosPrivate()
 
   const handleClickTipo = (e) => {
-
-    const tipo = e.target.value;
+    const tipo = e.target.value
 
     if (tipo === tipoIncoporacion.NoIncorporado) {
-
       setIsNoIncorporado(true)
 
       setValores({
@@ -60,151 +49,108 @@ const ValidarInformacion = () => {
         tipo_Libranza: tipo
       })
     } else {
-
       setIsNoIncorporado(false)
 
       setValores({
         ...valores,
-        Cartera_incorporada: "",
-        Cartera_no_incorporada: "",
+        Cartera_incorporada: '',
+        Cartera_no_incorporada: '',
         tipo_Libranza: tipo
       }
       )
     }
-
-
   }
   const handleInputChange = (event) => {
-    const value = event.target.value;
-    const name = event.target.id;
+    const value = event.target.value
+    const name = event.target.id
 
-
-    let numericInput = value.replace(/[^0-9]/g, '');
+    let numericInput = value.replace(/[^0-9]/g, '')
     if (name === 'Tasa_interes' && value !== '') {
-      numericInput = Math.min(parseInt(numericInput, 10), 100).toString();
+      numericInput = Math.min(parseInt(numericInput, 10), 100).toString()
     }
 
-    const formattedInput = numericInput.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const formattedInput = numericInput.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
     setValores({
       ...valores,
       [name]: formattedInput
     })
-
-
-
   }
   const handleSubmitRevisar = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      setIsLoading(true);
-      const libranzas = await RevisarCriterios(valores);
+      setIsLoading(true)
+      const libranzas = await RevisarCriterios(valores)
 
       if (!libranzas.success) {
-        setLista(null);
-        return setDataModalInfo({
-          Title: "Libranzas Revisadas",
-          Mensaje: "No se encontraron libranzas",
-          tipo: 'Error'
+        setLista(null)
+        return setshowModalInfo({
+          Title: 'Libranzas Revisadas',
+          Mensaje: libranzas.message,
+          Visible: true
         })
       }
-      setLista(libranzas.result);
-      setDataModalInfo({
-        Title: "Libranzas Revisadas",
-        Mensaje: "Se Consultaron correctamente",
-        tipo: 'Succes'
+      setLista(libranzas.result)
+      setshowModalInfo({
+        Title: 'Libranzas Revisadas',
+        Mensaje: 'Se Consultaron correctamente',
+        Visible: true
       })
     } catch (error) {
-      setDataModalInfo({
+      setshowModalInfo({
         Title: 'Libranzas Revisadas',
         Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
-        tipo: 'Error'
+        Visible: true
       })
     } finally {
       setIsLoading(false)
-      setShowModalInfo(true)
     }
-
   }
   const handleSubmitRevisados = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      setIsLoading(true);
-      const libranzas = await CriteriosRevisados();
+      setIsLoading(true)
+      const libranzas = await CriteriosRevisados()
       if (!libranzas.success) {
-        setLista(null);
-        return setDataModalInfo({
-          Title: "Libranzas Revisadas",
-          Mensaje: "No se encontraron libranzas",
-          tipo: 'Error'
+        setLista(null)
+        return setshowModalInfo({
+          Title: 'Libranzas Revisadas',
+          Mensaje: 'No se encontraron libranzas',
+          Visible: true
         })
       }
-      setLista(libranzas.result);
-     
-      setDataModalInfo({
-        Title: "Libranzas Revisadas",
+      setLista(libranzas.result)
+
+      setshowModalInfo({
+        Title: 'Libranzas Revisadas',
         Mensaje: `Se Consultaron correctamente ${libranzas.result.length} libranzas`,
-        tipo: 'Succes'
+        Visible: true
       })
     } catch (error) {
-      setDataModalInfo({
+      setshowModalInfo({
         Title: 'Libranzas Revisadas',
         Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
-        tipo: 'Error'
+        Visible: true
       })
     } finally {
       setIsLoading(false)
-      setShowModalInfo(true)
     }
   }
   const validarLibranzas = () => {
-
-    let libranzas={
-      aprobadas: [],
-      rechazadas: []
-    }
     try {
- 
-      lista.forEach(item => {
-        let flug = true;
-        for (var key in item) {
-          if (item.hasOwnProperty(key)) {
-            if (item[key] === 'NO CUMPLE') {
-              flug = false
-            }
-
-          }
-        }
-        if (flug) {
-          libranzas.aprobadas.push(item.libranza)
-        } else {
-          libranzas.rechazadas.push(item.libranza)
-        }
-      });
-
+      const libranzas = validarCriterios(lista)
       setRevisionLibranzas(libranzas)
-
     } catch (error) {
       console.log(error)
-    }finally{
+    } finally {
       setshowModalConfirmacion(true)
     }
-
-
-
   }
-  const closeModal = () => {
-    setShowModalInfo(false)
-    setDataModalInfo(null)
-  }
-
 
   return (
-
     <>
       <div className="p-4 border-2  mb-2 border-gray-200  rounded-lg dark:border-gray-700">
-
         <div className="flex items-center justify-center flex-col p-4 h-full rounded bg-gray-50 dark:bg-gray-800 ">
           <form method='post' onSubmit={handleSubmitRevisar} className="w-full max-w-3xl">
             <div className="grid grid-cols-3 Tablet:grid-cols-1 Laptop:grid-cols-2 gap-4 mx-3 m-4">
@@ -247,7 +193,6 @@ const ValidarInformacion = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
                   placeholder="Saldo Cartera" />
 
-
               </div>
               <div className="w-full  px-3 ">
                 <label className="block  tracking-wide text-gray-700 text-sm mb-2 dark:text-white" >
@@ -274,7 +219,6 @@ const ValidarInformacion = () => {
                   required={true}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
                   placeholder="%" />
-
 
               </div>
               <div className="w-full  px-3 ">
@@ -328,7 +272,9 @@ const ValidarInformacion = () => {
 
           {/* tabla */}
 
-          {IsLoading ? <Loading /> : lista &&
+          {IsLoading
+            ? <Loading />
+            : lista &&
             <>
               <TableCriterios lista={lista} />
               <div className="flex flex-wrap m-8 justify-center gap-6">
@@ -339,15 +285,11 @@ const ValidarInformacion = () => {
 
           {/* tabla */}
 
-
-
-
-
         </div>
       </div>
 
-      {showModalConfirmacion && <ModalConfirmacion libranzas={Revisionlibranzas} show={showModalConfirmacion} closeModal={setshowModalConfirmacion} />}
-      {showModalInfo && <ModalInfo data={dataModalInfo} show={ModalInfo} close={closeModal} />}
+      {showModalConfirmacion && <ModalConfirmacion libranzas={Revisionlibranzas} show={showModalConfirmacion} close={setshowModalConfirmacion} />}
+      {showModalInfo.Visible && <ModalInfo data={showModalInfo} close={setshowModalInfo}/>}
     </>
   )
 }

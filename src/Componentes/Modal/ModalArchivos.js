@@ -1,72 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { FaXmark } from 'react-icons/fa6';
-import { AiFillCaretDown } from "react-icons/ai";
-import { descargarArchivo } from "../../Services/ArchivosService";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { listaDocumentos } from "../../utils/Archivos";
+import React, { useEffect, useState } from 'react'
+import { FaXmark } from 'react-icons/fa6'
+import { AiFillCaretDown } from 'react-icons/ai'
+import { DescargarArchivo } from '../../Services/ArchivosService'
+import { listaDocumentos } from '../../utils/Archivos'
+import ModalInfo from './ModalInfo'
 
+export default function ModalArchivos ({ libranza, close, show }) {
+  const [selectedArchivo, setSelectedArchivo] = useState({ tipo: '', label: '' })
+  const [showModalInfo, setShowModalInfo] = useState({ Title: 'Descargar Archivo', Mensaje: '', Visible: false })
 
-export default function ModalArchivos({ libranza, setShowModal, show }) {
-  const [selectedArchivo, setSelectedArchivo] = useState({ tipo: '', label: '' });
-
-  const axios = useAxiosPrivate()
   const handleSelectedArchivo = (event) => {
-
-
     setSelectedArchivo(
       {
         ...selectedArchivo,
         tipo: event.target.value,
-        label: event.target.options[event.target.selectedIndex].text,
+        label: event.target.options[event.target.selectedIndex].text
       }
-    );
+    )
   }
   const handleDescargarArchivo = async () => {
     try {
       const tipoFile = selectedArchivo.tipo
 
-      const response = await descargarArchivo(axios, libranza, tipoFile);
-      if (response == null) {
-        alert('Error interno')
-      }
+      const response = await DescargarArchivo(libranza, tipoFile)
 
-      if(!response.data.carga){
-        throw new Error('No tiene pdf cargado')
+      if (!response.success) {
+        return setShowModalInfo({
+          ...showModalInfo,
+          Mensaje: response.message,
+          Visible: true
+        })
       }
-      let downloadLink = document.createElement("a");
-      const fileName = `${libranza}_${response.data.cedula}_${selectedArchivo.label}` + ".pdf";
-      downloadLink.href = "data: application / pdf; base64," + response.data.respuesta;
-      downloadLink.target = "_blank";
-      downloadLink.download = fileName;
-      downloadLink.click();
+      const downloadLink = document.createElement('a')
+      const fileName = `${libranza}_${response.result.cedula}_${selectedArchivo.label}.pdf`
+      downloadLink.href = 'data: application / pdf; base64,' + response.result.archivo
+      downloadLink.target = '_blank'
+      downloadLink.download = fileName
+      downloadLink.click()
     } catch (error) {
-      alert(error)
+      return setShowModalInfo({
+        ...showModalInfo,
+        Mensaje: 'Error Interno',
+        Visible: true
+      })
     }
-
-
-
   }
 
   const stopPropagation = (e) => {
-    e.stopPropagation();
-  };
+    e.stopPropagation()
+  }
 
   useEffect(() => {
     if (show) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
     return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [show]);
-
+      document.body.style.overflow = 'auto'
+    }
+  }, [show])
 
   return (
 
-
-    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${(!show ? 'hidden' : '')}`} onClick={() => setShowModal(false)} >
+<>
+    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${(!show ? 'hidden' : '')}`} onClick={() => close(false)} >
       <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity">
           <div className="absolute inset-0 bg-gray-900 opacity-75" />
@@ -74,8 +72,8 @@ export default function ModalArchivos({ libranza, setShowModal, show }) {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div onClick={stopPropagation} className="inline-block align-center rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
           <div className="bg-primary-500 text-white px-4 py-3 flex justify-between">
-            <h2>Libranza {libranza}</h2>
-            <div><span className="cursor-pointer" onClick={() => setShowModal(false)}><FaXmark /></span></div>
+            <h2>Libranza - {libranza}</h2>
+            <div><span className="cursor-pointer" onClick={() => close(false)}><FaXmark /></span></div>
           </div>
           <div className="bg-white px-4 py-8 flex flex-col  gap-4">
             {/* <label className="font-medium text-gray-800">{datos.Content}</label> */}
@@ -89,15 +87,12 @@ export default function ModalArchivos({ libranza, setShowModal, show }) {
                   {listaDocumentos.map(({ label, value }) =>
                     <option key={value} value={value}>{label}</option>
 
-
                   )}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <span><AiFillCaretDown /> </span>
                 </div>
               </div>
-
-
 
             </div>
             <div className="flex flex-wrap justify-center gap-6">
@@ -108,13 +103,15 @@ export default function ModalArchivos({ libranza, setShowModal, show }) {
             {/* <input type="text" className="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3" /> */}
           </div>
           <div className="bg-gray-200 px-4 py-3 text-right">
-            <button type="button" className="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onClick={() => setShowModal(false)}><i className="fas fa-times"></i> Cerrar</button>
+            <button type="button" className="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onClick={() => close(false)}><i className="fas fa-times"></i> Cerrar</button>
 
           </div>
         </div>
       </div>
     </div>
 
+    {showModalInfo.Visible && <ModalInfo data={showModalInfo} close={setShowModalInfo} />}
+    </>
 
-  );
+  )
 }
