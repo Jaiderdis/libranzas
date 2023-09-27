@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 // CustomHooks
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 // icons
@@ -12,7 +13,6 @@ import { CriteriosRevisados, RevisarCriterios } from '../../Services/CriteriosSe
 // Context
 import CriteriosContext from '../../Context/CriteriosContext'
 import { tipoIncoporacion, validarCriterios } from '../../utils/Criterio'
-import ModalInfo from '../../Componentes/Modal/ModalInfo'
 
 const ValidarInformacion = () => {
   const { lista, setLista } = useContext(CriteriosContext)
@@ -29,7 +29,6 @@ const ValidarInformacion = () => {
   })
   const [IsLoading, setIsLoading] = useState(false)
   const [showModalConfirmacion, setshowModalConfirmacion] = useState(false)
-  const [showModalInfo, setshowModalInfo] = useState({ Title: null, Mensaje: null, Visible: false })
 
   const [Revisionlibranzas, setRevisionLibranzas] = useState({
     aprobadas: [],
@@ -37,7 +36,6 @@ const ValidarInformacion = () => {
   })
 
   useAxiosPrivate()
-
   const handleClickTipo = (e) => {
     const tipo = e.target.value
 
@@ -85,24 +83,13 @@ const ValidarInformacion = () => {
 
       if (!libranzas.success) {
         setLista(null)
-        return setshowModalInfo({
-          Title: 'Libranzas Revisadas',
-          Mensaje: libranzas.message,
-          Visible: true
-        })
+        return toast.error(libranzas.message)
       }
       setLista(libranzas.result)
-      setshowModalInfo({
-        Title: 'Libranzas Revisadas',
-        Mensaje: 'Se Consultaron correctamente',
-        Visible: true
-      })
+
+      toast.success(`Se consultaron correctamente ${libranzas.result.length} libranzas`)
     } catch (error) {
-      setshowModalInfo({
-        Title: 'Libranzas Revisadas',
-        Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
-        Visible: true
-      })
+      toast.error('Error interno, validar mas tarde o comunicarse con el proveedor')
     } finally {
       setIsLoading(false)
     }
@@ -114,25 +101,13 @@ const ValidarInformacion = () => {
       const libranzas = await CriteriosRevisados()
       if (!libranzas.success) {
         setLista(null)
-        return setshowModalInfo({
-          Title: 'Libranzas Revisadas',
-          Mensaje: 'No se encontraron libranzas',
-          Visible: true
-        })
+        return toast.error('No se encontraron libranzas')
       }
       setLista(libranzas.result)
 
-      setshowModalInfo({
-        Title: 'Libranzas Revisadas',
-        Mensaje: `Se Consultaron correctamente ${libranzas.result.length} libranzas`,
-        Visible: true
-      })
+      toast.success(`Se consultaron correctamente ${libranzas.result.length} libranzas`)
     } catch (error) {
-      setshowModalInfo({
-        Title: 'Libranzas Revisadas',
-        Mensaje: 'Error interno, validar mas tarde o comunicarse con el proveedor',
-        Visible: true
-      })
+      toast.error('Error interno, validar mas tarde o comunicarse con el proveedor')
     } finally {
       setIsLoading(false)
     }
@@ -288,8 +263,9 @@ const ValidarInformacion = () => {
         </div>
       </div>
 
+      <Toaster position='bottom-right'/>
+
       {showModalConfirmacion && <ModalConfirmacion libranzas={Revisionlibranzas} show={showModalConfirmacion} close={setshowModalConfirmacion} />}
-      {showModalInfo.Visible && <ModalInfo data={showModalInfo} close={setshowModalInfo}/>}
     </>
   )
 }

@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { Loading } from '../../Componentes/Loading/Loading'
-import ModalInfo from '../../Componentes/Modal/ModalInfo'
 import { CargarExcel, CargarPDFs } from '../../Services/ArchivosService'
 
 const CargarArchivos = () => {
   const [selectedFileExcel, setSelectedFileExcel] = useState(null)
   const [loadingSaveFile, setLoadingSaveFile] = useState(false)
-  const [modalInfo, setModalInfo] = useState({ Title: '', Mensaje: '', Visible: false })
 
   const [selectedFileDocument, setSelectedFileDocument] = useState(null)
   const [draggedExcelOver, setDraggedExcelOver] = useState(false)
@@ -23,7 +22,7 @@ const CargarArchivos = () => {
       if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
         setSelectedFileExcel(file)
       } else {
-        setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
+        toast('Por favor, selecciona un archivo .xlsx válido.')
       }
     }
   }
@@ -45,7 +44,7 @@ const CargarArchivos = () => {
       setSelectedFileExcel(droppedFiles[0])
       setDraggedExcelOver(false)
     } else {
-      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
+      toast('Por favor, selecciona un archivo .xlsx válido.')
     }
   }
   // Adjuntar Excel
@@ -57,7 +56,7 @@ const CargarArchivos = () => {
       if (file.type === 'application/x-rar-compressed' || file.name.endsWith('.rar')) {
         setSelectedFileDocument(file)
       } else {
-        setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .rar o .zip válido.', Visible: true })
+        toast('Por favor, selecciona un archivo .rar o .zip válido.')
       }
     }
   }
@@ -79,7 +78,7 @@ const CargarArchivos = () => {
       setSelectedFileDocument(droppedFiles[0])
       setDraggedDocumentOver(false)
     } else {
-      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo .xlsx válido.', Visible: true })
+      toast('Por favor, selecciona un archivo .rar o .zip válido.')
     }
   }
   // Adjuntar Documentos
@@ -87,9 +86,7 @@ const CargarArchivos = () => {
   // Subir Archivo Excel
   const handleSubmitExcel = async () => {
     if (!selectedFileExcel) {
-      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo antes de subirlo.', Visible: true })
-
-      return
+      return toast('Por favor, selecciona un archivo antes de subirlo.')
     }
 
     try {
@@ -100,14 +97,13 @@ const CargarArchivos = () => {
 
       const response = await CargarExcel(formData)
 
-      setModalInfo(
-        {
-          Title: response.success ? 'Exito' : 'Error',
-          Mensaje: response.message,
-          Visible: true
-        })
+      if (response.success) {
+        toast.success(response.message)
+      } else {
+        toast.error(response.message)
+      }
     } catch (error) {
-      setModalInfo({ Title: 'Error', Mensaje: 'Error al cargar archivo excel', Visible: true })
+      toast.error('Error al cargar archivo excel')
     } finally {
       setLoadingSaveFile(false)
     }
@@ -116,9 +112,7 @@ const CargarArchivos = () => {
   // Subir PDFs
   const handleSubmitDocument = async () => {
     if (!selectedFileDocument) {
-      setModalInfo({ Title: 'Advertencia', Mensaje: 'Por favor, selecciona un archivo antes de subirlo.', Visible: true })
-
-      return
+      return toast('Por favor, selecciona un archivo antes de subirlo.')
     }
     try {
       setLoadingSaveFile(true)
@@ -127,18 +121,13 @@ const CargarArchivos = () => {
 
       const response = await CargarPDFs(formData)
 
-      setModalInfo(
-        {
-          Title: response.success ? 'Exito' : 'Error',
-          Mensaje: response.message,
-          Visible: true
-        })
+      if (response.success) {
+        toast.success(response.message)
+      } else {
+        toast.error(response.message)
+      }
     } catch (error) {
-      setModalInfo({
-        Title: 'Carga Archivos',
-        Mensaje: 'Error al cargar los pdfs',
-        Visible: true
-      })
+      toast.error('Error al cargar los pdfs')
     } finally {
       setLoadingSaveFile(false)
     }
@@ -147,8 +136,6 @@ const CargarArchivos = () => {
   return (
     <>
       {loadingSaveFile && <Loading />}
-
-      {modalInfo.Visible && <ModalInfo data={modalInfo} close={setModalInfo} />}
 
       <div className="flex items-center justify-center pl-2 h-12 mb-2 rounded text-white bg-primary-500 dark:bg-gray-800">
         <h1> <strong>SUBIR EXCEL</strong></h1>
@@ -284,6 +271,8 @@ const CargarArchivos = () => {
           </div>
         </div>
       </div>
+
+      <Toaster position='bottom-right'/>
     </>
   )
 }
